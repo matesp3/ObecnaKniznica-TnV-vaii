@@ -2,5 +2,8 @@
 
 #btnAddAnotherAuthor {
     width: 40px;
-    background-color: var(--myVar-darkBlue) ;
+    background-color: var(--myVar-greyOfBorders) ;
+}
+#bookForm {
+    background-color: var(--myVar-greyOfBackground) !important;
 }

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 
-class FormController extends AControllerBase
+class BookFormController extends AControllerBase
 {
 
     /**
