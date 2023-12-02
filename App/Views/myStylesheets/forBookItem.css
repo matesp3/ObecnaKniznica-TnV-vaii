@@ -1,0 +1,111 @@
+@import "variables.css";
+
+:root {
+    --myVar-btnReserveShiftAbsVal: 30px;
+    --myVar-statusCoverShiftAbsVal: 60px;
+    --myVar-breakpointForReservationInfo: 568px;
+}
+
+body {
+    margin:0;
+}
+
+.cardBookItem {
+    width: 100%;
+    min-width: 200px !important ;
+}
+
+.cardBookItem:hover {
+    background-color: rgba(222, 211, 211, 0.15);
+}
+
+.sneakPeekImg {
+    width: 130px;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.descriptionSneakPeak {
+    padding-top: 20px ;
+}
+
+.authorName {
+    font-weight: bold;
+    transform: translateY(-1px);
+}
+
+.reservingArea {
+    width: 100%;
+}
+
+.ratingInfo {
+    font-weight: bold;
+    transform: translate(calc(0px - var(--myVar-btnReserveShiftAbsVal) - var(--myVar-statusCoverShiftAbsVal) ), -13%);
+    color: var(--myVar-darkBlue) !important;
+    background-color: rgba(253, 241, 25, 0.63);
+    position: relative;
+    padding: 4px 8px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: auto;
+    text-align: center;
+}
+
+.statusCoverClass {
+    transform: translate(calc(0px - var(--myVar-statusCoverShiftAbsVal)), 25%);
+}
+
+.statusAvailability {
+    transform: translate(0, -50%);
+    background-color: var(--myVar-available);
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px 8px;
+    width: auto;
+    border: 1px solid grey;
+}
+
+.btnReserve {
+    transform: translate(calc(0px - var(--myVar-btnReserveShiftAbsVal)), -25%);
+    color: var(--myVar-creme) !important;
+    background-color: var(--myVar-darkBlue) !important;
+}
+
+.btnReserve:hover {
+    border: 2px solid var(--myVar-available) !important;
+}
+
+@media screen and (max-width: 768px) {
+    .sneakPeekImg {
+        position: relative;
+        left: 50%;
+        transform:translateX(-50%);
+
+    }
+
+    .btnReserve {
+        transform: translateX(0);
+    }
+    .statusCoverClass {
+        transform: translate(0, 25%);
+    }
+    .statusAvailability {
+        position: relative;
+        width: 150px;
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -25%);
+    }
+
+    .sneakPeekImg {
+        margin-left: 0;
+    }
+
+    .ratingInfo {
+        position: relative;
+        left: 50%;
+        top: 0;
+        width: 150px;
+        transform: translate(-50%, 0);
+    }
+}

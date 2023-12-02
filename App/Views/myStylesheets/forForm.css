@@ -1,0 +1,6 @@
+@import "variables.css";
+
+#btnAddAnotherAuthor {
+    width: 40px;
+    background-color: var(--myVar-darkBlue) ;
+}

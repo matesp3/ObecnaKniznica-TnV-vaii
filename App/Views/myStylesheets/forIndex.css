@@ -1,0 +1,202 @@
+@import "variables.css";
+
+.content {
+    margin: 0;
+}
+
+.workingHoursStickyContainer {
+    width: 100%;
+    height: 20px;
+    /*background-color: #084886;*/
+    position: sticky;
+    top: 90px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.workingHours {
+    width: 210px;
+    color: var(--myVar-greyOfBorders);
+    font-weight: bold;
+    font-size: 95%;
+    text-align: left;
+}
+
+.tableOpeningHours {
+    width: 210px;
+    border-collapse: collapse;
+    border: 1px solid rgba(105, 105, 105, 0.34);
+    color: var(--myVar-greyOfBorders);
+    background-color: var(--myVar-creme);
+    font-size: 95%;
+}
+
+.workingHoursBottomContainer {
+    display: none;
+}
+
+.tableOpeningHours tr, td {
+    padding: 5px 10px;
+    border: 1px solid rgba(105, 105, 105, 0.34);
+}
+
+.tableOpeningHours tr:nth-child(2) {
+    font-weight: bold;
+}
+
+.contentGridContainer {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    gap: 0;
+    width: 100%; /* keby som dal 100vw - tak mi da aj side-scroll bar, pretoze, horizontalna scroll bar mi zabera z viewPortu
+                    predkom je iba obal pre vsetky hlavne komponenty {navbar, content, footer} */
+    position: relative;
+    top:0;
+    left:0;
+}
+
+.leftSideContentItem {
+    background-color: var(--myVar-greyOfBackground);
+    grid-row-start: 1;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.middleContentItem {
+    background-color: var(--myVar-creme);
+    grid-row-start: 1;
+    grid-row-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 9;
+    height: 100%;
+    position: relative;
+    top:0;
+    left:0;
+    /*border: 1px solid #084886;;*/
+}
+
+.rightSideContentItem {
+    background-color: var(--myVar-greyOfBackground);
+    grid-row-start: 1;
+    grid-row-end: 5;
+    grid-column-start: 9;
+    grid-column-end: 13;
+    /*position: relative;*/
+}
+
+
+.h3Actualities {
+    margin-top: 1vw;
+    margin-left: 3vw;
+    margin-bottom: 2vw;
+    color: var(--myVar-darkBlue);
+}
+
+.cardsGrid {
+    display: grid !important;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 3vw;
+
+    width: 100%;
+    height: auto;
+    place-items: center;
+    margin-bottom: 1vw;
+}
+
+.actalitiesCard .cardImage {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+}
+
+.actalitiesCard:hover {
+    border: 1px solid var(--myVar-greyOfBorders);
+    box-shadow: black;
+}
+
+.actalitiesCard {
+    width: 80%;
+}
+
+.actalitiesCard .card-text {
+    color: var(--myVar-darkBlue);
+}
+.actalitiesCard .card-title {
+    color: var(--myVar-darkBlue);
+}
+
+.actalitiesCard:hover .card-title {
+    color: #86084b;
+    text-decoration: underline;
+}
+
+.pageCounter {
+    display: flex;
+    position: relative;
+    bottom: 0;
+    align-content: center;
+    justify-content: center;
+}
+
+ul.pagination a.page-link {
+    color:#1966be;;
+}
+
+ul.pagination a.page-link:hover {
+    color: var(--myVar-darkBlue);
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .workingHoursStickyContainer {
+        display: none;
+    }
+
+    .leftSideContentItem {
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    .middleContentItem {
+        grid-column-start: 2;
+        grid-column-end: 12;
+    }
+
+    .rightSideContentItem {
+        grid-row-start: 1;
+        grid-row-end: 5;
+        grid-column-start: 12;
+        grid-column-end: 13;
+    }
+
+    .workingHoursBottomContainer{
+        display: block;
+        position: relative;
+        top:0;
+        left:0;
+        /*background-color: purple;*/
+        text-align: center;
+        border-top: 5px solid var(--myVar-greyOfBackground);
+
+    }
+
+    .workingHours {
+        height: 100% ;
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-30%);
+        padding: 15px 0;
+    }
+
+    .tableOpeningHours {
+        transform: translate(13%, -5%);
+        margin-bottom: 10px;
+        font-size: 3vw;
+        width: 80%;
+    }
+
+}

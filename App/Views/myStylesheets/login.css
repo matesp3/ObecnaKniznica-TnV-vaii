@@ -1,0 +1,38 @@
+@import "variables.css";
+
+
+
+/*.loginContent {*/
+/*    grid-area: loginContent;*/
+/*    position:relative;*/
+/*    background-color: var(--myVar-greyOfBackground);*/
+/*    width: 100%;*/
+/*    min-width: 400px;*/
+/*    min-height: 400px;*/
+/*}*/
+
+#loginCard {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: var(--myVar-creme);
+    padding: 15px;
+}
+
+.submitLoginButton {
+    background-color: var(--myVar-darkBlue);
+    transform: translateY(10px);
+    color: var(--myVar-creme);
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+.passwordResetText {
+    color: var(--myVar-darkBlue);
+    transform: translate(5px, -9px);
+}
+
+.passwordResetText:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+

@@ -1,31 +1,151 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col mt-5">
-            <div class="text-center">
-                <h2>Vaííčko MVC FW</h2>
-                <img src="public/images/vaiicko_logo.png">
-                <p>
-                    Gratulujeme vám, úspešne sa vám podarilo nainštalovať a spustiť framework
-                    <strong>Vaííčko</strong> <?= \App\Config\Configuration::FW_VERSION ?>!<br>
-                    Dúfame, že sa Vám pomocou tohto frameworku vytvoríte nejakú skvelú aplikáciu.<br>
-                </p>
-                <p>
-                    Tento jednoduchý framework bol vytvorený pre lepšie pochopenie architektúry MVC.<br>
-                    Je určený pre študentov predmetu <em>vývoj aplikácií pre internet a intranet</em>, ale nielen im.
-                </p>
+<div class="contentGridContainer"> <!-- stred medzi navbarom a footerom -->
+    <div class="middleContentItem">
+        <h3 class="h3Actualities">Aktuality</h3>
+        <div class="cardsGrid">
+            <div class="card rounded-4 actalitiesCard">
+                <div class="card-body">
+                    <h5 class="card-title">Nový školský rok!</h5>
+                    <p class="card-text">Začal sa nový školský rok, v ktorom ponúkame žiakom a študentom ešte viac
+                        výhod, ako doteraz...</p>
+                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>
+                    </p>
+                </div>
+                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">
             </div>
+
+<!--            <div class="card rounded-4 actalitiesCard">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
+<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
+<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
+<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
+<!--                </div>-->
+<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
+<!--            </div>-->
+<!--            <div class="card rounded-4 actalitiesCard">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Nový školský rok!</h5>-->
+<!--                    <p class="card-text">Začal sa nový školský rok, v ktorom ponúkame žiakom a študentom ešte viac-->
+<!--                        výhod, ako doteraz...</p>-->
+<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
+<!--            </div>-->
+
+<!--            <div class="card rounded-4 actalitiesCard">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
+<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
+<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
+<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
+<!--                </div>-->
+<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
+<!--            </div>-->
+<!--            <div class="card rounded-4 actalitiesCard">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Nový školský rok!</h5>-->
+<!--                    <p class="card-text">Začal sa nový školský rok, v ktorom ponúkame žiakom a študentom ešte viac-->
+<!--                        výhod, ako doteraz...</p>-->
+<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
+<!--            </div>-->
+<!---->
+<!--            <div class="card rounded-4 actalitiesCard">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
+<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
+<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
+<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
+<!--                </div>-->
+<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
+<!--            </div>-->
+        </div>
+
+        <div class="pageCounter">
+            <nav aria-label="Page navigation for actualities">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="workingHoursBottomContainer">
+            <p class="workingHours"> Otváracie hodiny</p>
+            <table class="tableOpeningHours">
+                <tr>
+                    <td>Pondelok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Utorok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Streda</td>
+                    <td>07:00 - 19:00</td>
+                </tr>
+                <tr>
+                    <td>Štvrtok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Piatok</td>
+                    <td>07:00 - 19:00</td>
+                </tr>
+                <tr>
+                    <td>Sobota</td>
+                    <td>09:00 - 13:00</td>
+                </tr>
+            </table>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col text-center">
-            <h4>Autori</h4>
-            <div>
-                <a href="mailto:Patrik.Hrkut@fri.uniza.sk">doc. Ing. Patrik Hrkút, PhD.</a><br>
-                <a href="mailto:Michal.Duracik@fri.uniza.sk">Ing. Michal Ďuračík, PhD.</a><br>
-                <a href="mailto:Matej.Mesko@fri.uniza.sk">Ing. Matej Meško, PhD.</a><br><br>
-                &copy; 2020-<?= date('Y') ?> Žilinská univerzita v Žiline, Fakulta riadenia a informatiky, Katedra
-                softvérových technológií
-            </div>
+    <div class="leftSideContentItem"></div>
+
+    <div class="rightSideContentItem">
+
+        <div class="workingHoursStickyContainer">
+            <p class="workingHours"> Otváracie hodiny</p>
+            <table class="tableOpeningHours">
+                <tr>
+                    <td>Pondelok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Utorok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Streda</td>
+                    <td>07:00 - 19:00</td>
+                </tr>
+                <tr>
+                    <td>Štvrtok</td>
+                    <td>07:00 - 17:00</td>
+                </tr>
+                <tr>
+                    <td>Piatok</td>
+                    <td>07:00 - 19:00</td>
+                </tr>
+                <tr>
+                    <td>Sobota</td>
+                    <td>09:00 - 13:00</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

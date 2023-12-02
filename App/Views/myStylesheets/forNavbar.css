@@ -1,0 +1,65 @@
+@import "variables.css";
+
+#navHeader {
+    background-color: var(--myVar-greenHeader);
+    font-weight: bold;
+    position: sticky;
+    top:0;
+    z-index: 1;
+    opacity: 100%;
+}
+
+.itemOfNavbar, .navbar-brand {
+    color: var(--myVar-darkBlue);
+    font-size: 5vw;
+}
+
+.itemOfNavbar:hover, .navbar-toggler:hover {
+    border-radius: 10px;
+    color: #1966be;
+    background-color: rgba(215, 248, 175, 0.29);
+}
+
+.dropdown-menu {
+    background-color: #fffff7;
+    border: 3px solid rgba(42, 210, 20, 0.36);
+}
+
+.dropdown-item {
+    color: #084886;
+    font-weight: normal;
+}
+
+.navbar-toggler {
+    color: var(--myVar-darkBlue);
+}
+
+@media screen and (min-width: 768px) {
+    .itemOfNavbar, .navbar-brand {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .itemOfNavbar, .navbar-brand {
+        font-size: 1.1vw;
+    }
+}
+
+@media screen and (max-width: 174px) {
+    span.homeButtonName {
+        display: none;
+    }
+
+    i.homeButtonIcon {  /* ikonka je vytvorena ako font pismo */
+        font-size: 50vw;
+    }
+}
+
+#footer {
+    /*position: fixed !important;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    width: 100%;
+    background-color: var(--myVar-greenOfFooter);
+}
