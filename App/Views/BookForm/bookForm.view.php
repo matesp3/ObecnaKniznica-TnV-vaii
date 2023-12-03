@@ -1,4 +1,6 @@
-
+<?php
+$layout = root
+?>
      <form>
          <div class="container py-3 ps-5 my-5 rounded-3" id="bookForm" >
              <div class="row mb-3">
@@ -36,7 +38,7 @@
                  <button class="btn btn-sm btn-primary col-1 rounded-3" type="button" id="btnAddAnotherAuthor">
                      <i class="bi bi-plus-lg"></i>
                  </button>
-                 <label for="btnAddAnotherAuthor" class="col-form-label col-11">Pridať autora</label>
+                 <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-11">Pridať autora</label>
              </div>
 
              <div class="row mb-3">
@@ -54,3 +56,4 @@
              </div>
          </div>
      </form>
+     <script src="public/js/script.js"></script>
