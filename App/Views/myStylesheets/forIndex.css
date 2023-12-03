@@ -129,7 +129,7 @@
 }
 
 .actalitiesCard:hover .card-title {
-    color: #86084b;
+    color: var(--myVar-onHover);
     text-decoration: underline;
 }
 

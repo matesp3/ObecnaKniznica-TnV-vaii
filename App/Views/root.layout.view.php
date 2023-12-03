@@ -29,7 +29,7 @@
 <body>
     <nav id="navHeader" class="navbar navbar-expand-md mojNav">  <!-- bg-body-tertiary (pozadie)-->
         <div class="container-fluid">
-            <a id="homeIcon" class="navbar-brand itemOfNavbar" href="<?= $link->url("bookForm.index") ?>" title="<?= \App\Config\Configuration::APP_NAME ?>">
+            <a id="homeIcon" class="navbar-brand itemOfNavbar" href="<?= $link->url("bookItem.index") ?>" title="<?= \App\Config\Configuration::APP_NAME ?>">
                 <i class="homeButtonIcon bi bi-book"></i>
                 <span class="homeButtonName"> Obecná knižnica </span>
             </a>
