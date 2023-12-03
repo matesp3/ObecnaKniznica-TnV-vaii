@@ -16,7 +16,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="public/css/styl.css">
+    <link rel="stylesheet" href="App/Views/myStylesheets/variables.css">
     <link rel="stylesheet" href="App/Views/myStylesheets/forNavbar.css">
     <link rel="stylesheet" href="App/Views/myStylesheets/forIndex.css">
     <link rel="stylesheet" href="App/Views/myStylesheets/forBookItem.css">

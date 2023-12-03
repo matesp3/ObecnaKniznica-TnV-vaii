@@ -10,7 +10,7 @@
                     <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>
                     </p>
                 </div>
-                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">
+                <img src="public/images/hobbit.jpg" class="card-img-bottom cardImage" alt="cardImage">
             </div>
 
 <!--            <div class="card rounded-4 actalitiesCard">-->

@@ -1,7 +1,8 @@
 <?php
 $layout = 'root'
+/** @var \App\Core\LinkGenerator $link */
 ?>
-     <form>
+     <form method="post" action="<?= $link->url('bookItem.add') ?>" enctype="multipart/form-data">
          <div class="container py-3 ps-5 my-5 rounded-3" id="bookForm" >
 
              <div class="row mb-3">
@@ -25,10 +26,10 @@ $layout = 'root'
                          <div class="col-md-8" id="aboutAuthorInputs1">
                              <div class="row">
                                  <div class="col-md-5 me-lg-5">
-                                     <input class="form-control" id="author1Name" type="text" placeholder="Meno" required>
+                                     <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
                                  </div>
                                  <div class="col-md-5 ms-lg-5">
-                                     <input class="form-control" id="author1Surname" type="text" placeholder="Priezvisko" required>
+                                     <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                                  </div>
                              </div>
                          </div>
