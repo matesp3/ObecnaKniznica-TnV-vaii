@@ -21,18 +21,20 @@ $layout = 'root'
 
              <div class="row mb-3" id="authorsOfBookContainer">
                  <!--         zaciatok patternu pre javascript -->
-
-                         <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
-                         <div class="col-md-8" id="aboutAuthorInputs1">
-                             <div class="row">
-                                 <div class="col-md-5 me-lg-5">
-                                     <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
-                                 </div>
-                                 <div class="col-md-5 ms-lg-5">
-                                     <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
-                                 </div>
+                 <div class="row">
+                     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
+                     <div class="col-md-8" id="aboutAuthorInputs1">
+                         <div class="row">
+                             <div class="col-md-5 me-lg-5">
+                                 <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
+                             </div>
+                             <div class="col-md-5 me-lg-5">
+                                 <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                              </div>
                          </div>
+                     </div>
+                 </div>
+
                  <!--        koniec patternu pre javascript -->
              </div>
 
@@ -65,9 +67,5 @@ $layout = 'root'
      </form>
 
 <script>
-    document.getElementById('btnAddAnotherAuthor').onclick = () => {
-        const container =document.getElementById('authorsOfBookContainer')
-        let newDiv = document.createElement('input')
-        container.appendChild(newDiv)
-    }
+
 </script>

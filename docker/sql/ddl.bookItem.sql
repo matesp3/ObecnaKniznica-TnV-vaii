@@ -20,5 +20,5 @@ ALTER TABLE `BookItems` ADD
 
     INSERT INTO `BookItems` (`bookName`, `author`, `picture`, `description`, `available`, `rating`)
 VALUES ('meno2', 'autor2', 'cestaKObrazku2', 'popis2', 1, 3.4),
--- --        (2, 'Cesta kľukatiaca sa krásnym údolím', '35981156452928-pexels-photo-13149220.jpeg'),
--- --        (3, 'Veža v diaľke medzi medzi stromami', '36020276268180-free-photo-of-zelena-veza-kostol-mestsky.jpeg');
+-- -- --        (2, 'Cesta kľukatiaca sa krásnym údolím', '35981156452928-pexels-photo-13149220.jpeg'),
+-- -- --        (3, 'Veža v diaľke medzi medzi stromami', '36020276268180-free-photo-of-zelena-veza-kostol-mestsky.jpeg');
