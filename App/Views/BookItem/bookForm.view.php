@@ -34,7 +34,6 @@ $layout = 'root'
                          </div>
                      </div>
                  </div>
-
                  <!--        koniec patternu pre javascript -->
              </div>
 
