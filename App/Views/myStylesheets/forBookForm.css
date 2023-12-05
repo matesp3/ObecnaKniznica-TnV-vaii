@@ -13,3 +13,8 @@
 #btnSubmitBookItem {
     border-color: var(--myVar-darkBlue);
 }
+
+#btnSubmitBookItem:hover {
+    background-color: var(--myVar-darkBlue);
+    color: var(--myVar-creme);
+}

@@ -16,7 +16,7 @@ CREATE TABLE `BookItems`
   DEFAULT CHARSET = utf8mb4;
 
 ALTER TABLE `BookItems` ADD
-    CONSTRAINT Check_rating_modify CHECK ( rating >= 0 AND rating <= 5 )
+    CONSTRAINT Check_rating_modify CHECK ( rating >= 0 AND rating <= 5 );
 
 INSERT INTO `BookItems` (`bookName`, `author`, `picture`, `description`, `available`, `rating`)
 VALUES ('meno2', 'autor2', 'cestaKObrazku2', 'popis2', 1, 3.4); --,
