@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Models\BookItem;
 
 class CatalogueController extends AControllerBase
 {
@@ -14,6 +15,7 @@ class CatalogueController extends AControllerBase
     public function index(): Response
     {
         // tu si budem z db brat posty
-        return $this->html([]); // a poslem si ich do view
+        $bookItems = BookItem::getAll();
+        return $this->html($bookItems); // a poslem si ich do view
     }
 }

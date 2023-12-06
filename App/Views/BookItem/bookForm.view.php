@@ -1,25 +1,32 @@
 <?php
-$layout = 'root'
+//$layout = 'root'
 /** @var \App\Core\LinkGenerator $link */
+/** @var Array $data  */
+///** @var \App\Models\BookItem $bookItem */
 ?>
-     <form method="post" action="<?= $link->url('bookItem.add') ?>" enctype="multipart/form-data">
+     <form class="needs-validation" method="post" action="<?= $link->url('bookItem.add') ?>" enctype="multipart/form-data">
          <div class="container py-3 ps-5 my-5 rounded-3" id="bookForm" >
 
              <div class="row mb-3">
                  <label for="bookPictureInput" class="col-form-label col-md-2">Ilustračný obrázok</label>
-                 <div class="col-md-8">
-                     <input class="form-control" type="file" id="bookPictureInput" required>
+                 <div class="col-md-8 was-validated">
+                     <input class="form-control" type="file" name="filePath" id="bookPictureInput" required>
+                     <?php if (@$data['bookItem']!= null): ?>
+                     <div>
+                        ahooj
+                     </div>
+                     <?php endif; ?>
                  </div>
              </div>
 
              <div class="row mb-3">
-                         <label for="bookName " class=" col-form-label col-md-2">Názov knihy</label>
-                     <div class="col-md-8">
-                         <input class="form-control" name="booksName" type="text" id="bookName" placeholder="Názov" required>
-                     </div>
+                 <label for="bookName " class=" col-form-label col-md-2">Názov knihy</label>
+                 <div class="col-md-8 was-validated">
+                     <input class="form-control" name="booksName" value="<?= @$data['bookItem']?->getBookName()?>" type="text" id="bookName" placeholder="Názov" required>
+                 </div>
              </div>
 
-             <div class="row mb-3" id="authorsOfBookContainer">
+             <div class="row mb-3 was-validated" id="authorsOfBookContainer">
                  <!--         zaciatok patternu pre javascript -->
                  <div class="row">
                      <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
@@ -41,20 +48,20 @@ $layout = 'root'
                  <button class="btn btn-sm btn-primary col-1 rounded-3" type="button" id="btnAddAnotherAuthor">
                      <i class="bi bi-plus-lg"></i>
                  </button>
-                 <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-11">Pridať autora</label>
+                 <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-2">Pridať autora</label>
              </div>
 
              <div class="row mt-5 mb-3">
                  <label for="numberOfAvailable " class=" col-form-label col-md-2">Dostupnosť(ks)</label>
-                 <div class=" col-md-2">
-                     <input class="form-control" type="text" id="numberOfAvailable" placeholder="napr. 5" required>
+                 <div class=" col-md-2 was-validated">
+                     <input class="form-control" name="amount" value="<?= @$data['bookItem']?->getAvailable()?>" type="text" id="numberOfAvailable" placeholder="napr. 5" required>
                  </div>
              </div>
 
              <div class="row">
-                 <label for="numberOfAvailable " class=" col-form-label col-md-2">Popis</label>
+                 <label for="descr " class=" col-form-label col-md-2">Popis</label>
                  <div class=" col-md-8">
-                     <textarea class="form-control" id="asc" placeholder="Priestor na zhodnotenie knihy"> </textarea>
+                     <textarea class="form-control" id="descr" name="description" value="<?= @$data['bookItem']?->getDescription()?>" placeholder="Priestor na zhodnotenie knihy"> </textarea>
                  </div>
              </div>
 
