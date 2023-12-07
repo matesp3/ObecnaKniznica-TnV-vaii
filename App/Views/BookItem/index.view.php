@@ -11,6 +11,9 @@
 <!--    --><?php //endif; ?>
 <?php //endforeach ?>
 
-<?php foreach ($data as $author) : ?>
+<?php foreach ($data['authors'] as $author) : ?>
     <h3><?= 'autor ->' . $author ?> </h3>
 <?php endforeach ?>
+
+<h2>vytvoreny string: <?= $data['str'] ?> </h2>
+

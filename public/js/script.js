@@ -1,4 +1,5 @@
 window.onload = (event) => {
+
     document.getElementById('btnAddAnotherAuthor').onclick = () => {
         const container =document.getElementById('authorsOfBookContainer');
         const currentNumOfAuthors = container.children.length + 1;

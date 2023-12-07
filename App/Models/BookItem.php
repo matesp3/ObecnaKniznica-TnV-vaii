@@ -10,7 +10,7 @@ class BookItem extends Model
 
     protected string $bookName;
     protected string $author;
-    protected string $picture;
+    protected ?string $picturePath = null;
     protected ?string $description = null;
     protected ?int $available = null;
     protected ?float $rating = null;
@@ -45,14 +45,14 @@ class BookItem extends Model
         $this->author = $author;
     }
 
-    public function getPicture(): string
+    public function getPicturePath(): ?string
     {
-        return $this->picture;
+        return $this->picturePath;
     }
 
-    public function setPicture(string $picture): void
+    public function setPicturePath(?string $picturePath): void
     {
-        $this->picture = $picture;
+        $this->picturePath = $picturePath;
     }
 
     public function getDescription(): ?string

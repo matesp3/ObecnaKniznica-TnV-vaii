@@ -91,7 +91,6 @@
         <?= $contentHTML ?>
     </div>
 </div>
-    <div class="container-fluid ">
         <footer id="footer" class="d-flex flex-wrap align-items-center justify-content-center bottom-top pb-3">
             <div class="row mt-3">
                 <div class="col text-center">
@@ -99,6 +98,5 @@
                 </div>
             </div>
         </footer>
-    </div>
 </body>
 </html>

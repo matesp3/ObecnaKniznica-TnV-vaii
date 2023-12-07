@@ -22,7 +22,7 @@
                 <div class="card mb-3 cardBookItem col-6">
                     <div class="row g-0">
                         <div class="col-md-2">
-                            <img src="<?= \App\Helpers\FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . $bookItem->getPicture() ?>" class="img-fluid sneakPeekImg" alt="Nahlad obalky knihy">
+                            <img src="<?= \App\Helpers\FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . $bookItem->getPicturePath() ?>" class="img-fluid sneakPeekImg" alt="Nahlad obalky knihy">
                         </div>
                         <div class="col-md-10" aria-label="productInfo">
                             <div class="card-body">
