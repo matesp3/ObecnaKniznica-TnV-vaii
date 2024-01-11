@@ -33,7 +33,7 @@ window.onload = (event) => {
         // create inputName
         let inputName = document.createElement('input');
         inputName.id = "author" + currentNumOfAuthors + "Name";
-        inputName.name = "authorName" + currentNumOfAuthors;
+        inputName.name = "name[]";
         inputName.className = "form-control";
         inputName.type = "text";
         inputName.placeholder = "Meno";
@@ -42,7 +42,7 @@ window.onload = (event) => {
         // create inputSurname
         let inputSurname = document.createElement('input');
         inputSurname.id = "author" + currentNumOfAuthors + "Surname";
-        inputSurname.name = "authorSurname" + currentNumOfAuthors;
+        inputSurname.name = "surname[]";
         inputSurname.className = "form-control";
         inputSurname.type = "text";
         inputSurname.placeholder = "Priezvisko";
@@ -50,7 +50,7 @@ window.onload = (event) => {
         divForSurnameInput.appendChild(inputSurname);
     }
 }
-
+//
 // <div class="row mt-3">
 //     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
 //     <div class="col-md-8" id="aboutAuthorInputs1">

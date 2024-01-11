@@ -68,6 +68,10 @@ class BookItemController extends AControllerBase
         $bookItem->save();
 
         return $this->html(['authors' => $authors, 'str' => $bookItem->getAuthor()],'index'); // vrati 'index' view v BookItem
+        // TODO
+        // * prerobit autora na tabulku, nie dlhy column autorov...
+        // * skusit dat pri tom autribute name v javascripte tie polia name[] a surname[]
+        // * pri edite bookItemu, pokial nemenim knizku, tak necham ulozenu tu, co som mal predtym
     }
 
     public function delete() : Response
@@ -76,7 +80,7 @@ class BookItemController extends AControllerBase
         $bookItem = BookItem::getOne($id);
 
         if (is_null($bookItem)) {
-            throw new HTTPException(404, "Odstraňovaný príspevok nie je možné odstrániť, lebo neexistuje!");
+            throw new HTTPException(404, "Odstraňovaný  príspevok nie je možné odstrániť, lebo neexistuje!");
         }
         FileStorage::deleteFile($bookItem->getPicturePath());
         $bookItem->delete();

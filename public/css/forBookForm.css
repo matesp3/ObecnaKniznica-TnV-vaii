@@ -1,5 +1,3 @@
-@import "variables.css";
-
 #btnAddAnotherAuthor {
     width: 40px;
     background-color: var(--myVar-darkBlue) ;
@@ -11,6 +9,9 @@
 }
 
 #btnSubmitBookItem {
+    /*border-color: var(--myVar-darkBlue);*/
+    position: relative;
+    /*transform: translateX(50%);*/
     border-color: var(--myVar-darkBlue);
 }
 

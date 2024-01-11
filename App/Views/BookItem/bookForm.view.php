@@ -4,7 +4,7 @@
 /** @var Array $data  */
 ?>
      <form class="needs-validation" method="post" action="<?= $link->url('bookItem.save') ?>" enctype="multipart/form-data">
-         <div class="container py-3 ps-5 my-5 rounded-3" id="bookForm" >
+         <div id="bookForm" class="container py-3 ps-5 my-5 rounded-3" >
              <input type="hidden" name="id" value="<?= @$data['bookItem']?->getId() ?>">
              <div class="row mb-3">
                  <label for="bookPictureInput" class="col-form-label col-md-2">Ilustračný obrázok</label>
@@ -24,7 +24,7 @@
              </div>
 
              <div class="row mb-3">
-                 <label for="bookName " class=" col-form-label col-md-2">Názov knihy</label>
+                 <label for="booksName " class=" col-form-label col-md-2">Názov knihy</label>
                  <div class="col-md-8 was-validated">
                      <input class="form-control" name="booksName" value="<?= @$data['bookItem']?->getBookName()?>" type="text" id="bookName" placeholder="Názov" required>
                  </div>
@@ -80,7 +80,7 @@
                      <input class="form-control" name="amount" value="<?= @$data['bookItem']?->getAvailable()?>" type="number" id="numberOfAvailable" placeholder="napr. 5" required>
                      <?php if (@$data['availability'] == false) : ?>
                          <div class="invalid-feedback">
-                             Please provide a valid city.
+                             Zadajte, prosím, nezáporné číslo.
                          </div>
                      <?php endif; ?>
                  </div>
@@ -96,10 +96,5 @@
              <div class="row justify-content-center">
                  <button id="btnSubmitBookItem" type="submit" class="btn border-2 col-2 col-md-1 mt-5 me-5">Uložiť</button>
              </div>
-
          </div>
      </form>
-
-<script>
-
-</script>

@@ -16,17 +16,11 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="App/Views/myStylesheets/variables.css">
-    <link rel="stylesheet" href="App/Views/myStylesheets/forNavbar.css">
-    <link rel="stylesheet" href="App/Views/myStylesheets/forIndex.css">
-    <link rel="stylesheet" href="App/Views/myStylesheets/forBookItem.css">
-    <link rel="stylesheet" href="App/Views/myStylesheets/login.css">
-    <link rel="stylesheet" href="App/Views/myStylesheets/forBookForm.css">
-
+    <link rel="stylesheet" href="public/css/allStyles.css">
     <script src="public/js/script.js"></script>
 </head>
 
-<body>
+<body id="rootBody">
     <nav id="navHeader" class="navbar navbar-expand-md mojNav">  <!-- bg-body-tertiary (pozadie)-->
         <div class="container-fluid">
             <a id="homeIcon" class="navbar-brand itemOfNavbar" href="<?= $link->url("bookItem.index") ?>" title="<?= \App\Config\Configuration::APP_NAME ?>">
@@ -59,33 +53,7 @@
             </div>
         </div>
     </nav>
-<!--<nav class="navbar navbar-expand-sm bg-light">-->
-<!--    <div class="container-fluid">-->
-<!--        <a class="navbar-brand" href="--><?php //= $link->url("home.index") ?><!--">-->
-<!--            <img src="public/images/vaiicko_logo.png" title="--><?php //= \App\Config\Configuration::APP_NAME ?><!--"-->
-<!--                 title="--><?php //= \App\Config\Configuration::APP_NAME ?><!--">-->
-<!--        </a>-->
-<!--        <ul class="navbar-nav me-auto">-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="--><?php //= $link->url("home.contact") ?><!--">Kontakt</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--        --><?php //if ($auth->isLogged()) { ?>
-<!--            <span class="navbar-text">Prihlásený používateľ: <b>--><?php //= $auth->getLoggedUserName() ?><!--</b></span>-->
-<!--            <ul class="navbar-nav ms-auto">-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="--><?php //= $link->url("auth.logout") ?><!--">Odhlásenie</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        --><?php //} else { ?>
-<!--            <ul class="navbar-nav ms-auto">-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="--><?php //= \App\Config\Configuration::LOGIN_URL ?><!--">Prihlásenie</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        --><?php //} ?>
-<!--    </div>-->
-<!--</nav>-->
+
 <div class="container-fluid">
     <div class="web-content">
         <?= $contentHTML ?>

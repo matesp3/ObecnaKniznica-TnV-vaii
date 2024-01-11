@@ -12,56 +12,6 @@
                 </div>
                 <img src="public/images/hobbit.jpg" class="card-img-bottom cardImage" alt="cardImage">
             </div>
-
-<!--            <div class="card rounded-4 actalitiesCard">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
-<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
-<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
-<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
-<!--                </div>-->
-<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
-<!--            </div>-->
-<!--            <div class="card rounded-4 actalitiesCard">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Nový školský rok!</h5>-->
-<!--                    <p class="card-text">Začal sa nový školský rok, v ktorom ponúkame žiakom a študentom ešte viac-->
-<!--                        výhod, ako doteraz...</p>-->
-<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
-<!--            </div>-->
-
-<!--            <div class="card rounded-4 actalitiesCard">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
-<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
-<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
-<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
-<!--                </div>-->
-<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
-<!--            </div>-->
-<!--            <div class="card rounded-4 actalitiesCard">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Nový školský rok!</h5>-->
-<!--                    <p class="card-text">Začal sa nový školský rok, v ktorom ponúkame žiakom a študentom ešte viac-->
-<!--                        výhod, ako doteraz...</p>-->
-<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred 3 hodinami</small>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--                <img src="Images/obrazok.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
-<!--            </div>-->
-<!---->
-<!--            <div class="card rounded-4 actalitiesCard">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title">Medzinárodný deň kníh</h5>-->
-<!--                    <p class="card-text">Srdečne Vás pozývame na akciu s názvom Medzinárodný deň kníh. Hosťom bude-->
-<!--                        spisovateľ Daniel Hevier, ktorý...</p>-->
-<!--                    <p class="card-text"><small class="text-body-secondary">Naposledy upravené pred týždňom</small></p>-->
-<!--                </div>-->
-<!--                <img src="Images/knihovna.jpg" class="card-img-bottom cardImage" alt="cardImage">-->
-<!--            </div>-->
         </div>
 
         <div class="pageCounter">
