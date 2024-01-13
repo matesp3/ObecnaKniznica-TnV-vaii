@@ -4,8 +4,8 @@
 /** @var array $data */
 ?>
 
-<div class="row">
-    <div class="card mb-3 card-body cardBookItem col-6">
+<div class="card">
+    <div class="card-body col-6 cardBookItem">
         <div class="row g-0">
             <div class="col-md-2">
                 <img src="<?= \App\Helpers\FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . $bookItem->getPicturePath() ?>" class="img-fluid sneakPeekImg" alt="Nahlad obalky knihy">
@@ -34,21 +34,21 @@
 
             </div>
         </div>
-        <div class="row g-0 reservingArea">
-            <div class="col-md-6 d-flex justify-content-md-start editSection">
-                <a class="btn btn-danger" href="<?= $link->url('bookItem.delete',['id' => $bookItem->getId()]) ?>">
-                    <i class="bi bi-trash"></i> vymazať
-                </a>
-                <a class="btn btn-warning" href="<?= $link->url('bookItem.edit',['id' => $bookItem->getId()]) ?>">
-                    <i class="bi bi-pencil"></i> upraviť
-                </a>
+    </div>
+    <div class="row g-0 reservingArea card-footer">
+        <div class="col-md-6 d-flex justify-content-md-start editSection">
+            <a class="btn btn-danger" href="<?= $link->url('bookItem.delete',['id' => $bookItem->getId()]) ?>">
+                <i class="bi bi-trash"></i> vymazať
+            </a>
+            <a class="btn btn-warning" href="<?= $link->url('bookItem.edit',['id' => $bookItem->getId()]) ?>">
+                <i class="bi bi-pencil"></i> upraviť
+            </a>
+        </div>
+        <div class="col-md-6 d-md-flex justify-content-md-end">
+            <div class="statusCoverClass">
+                <p class="statusAvailability"><?= $bookItem->getAvailable() != null && $bookItem->getAvailable() > 0 ? "Dostupné" : "Nedostupné" ?></p>
             </div>
-            <div class="col-md-6 d-md-flex justify-content-md-end">
-                <div class="statusCoverClass">
-                    <p class="statusAvailability"><?= $bookItem->getAvailable() != null && $bookItem->getAvailable() > 0 ? "Dostupné" : "Nedostupné" ?></p>
-                </div>
-                <button class="btn btn-primary btnReserve" type="button">Rezervovať</button>
-            </div>
+            <button class="btn btn-primary btnReserve" type="button">Rezervovať</button>
         </div>
     </div>
 </div>

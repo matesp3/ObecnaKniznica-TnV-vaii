@@ -1,6 +1,5 @@
 .cardBookItem {
     width: 100%;
-    min-width: 200px !important ;
 }
 
 .cardBookItem:hover {
@@ -12,7 +11,7 @@
 }
 
 .descriptionSneakPeak {
-    padding-top: 20px ;
+    /*padding-top: 20px ;*/
 }
 
 .authorName {
@@ -22,7 +21,6 @@
 
 .reservingArea {
     width: 100%;
-    transform: translateY(20%);
 }
 
 .editSection {
@@ -105,7 +103,6 @@
 
     .sneakPeekImg {
         margin-left: 0;
-        /*margin-right: 0;*/
     }
 
     .ratingInfoCover {
@@ -116,7 +113,6 @@
 
     .editSection {
         justify-content: center;
-        /*column-gap: 40%;*/
     }
 
     .editSection > a {

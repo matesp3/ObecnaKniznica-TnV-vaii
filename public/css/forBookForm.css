@@ -1,5 +1,6 @@
 #btnAddAnotherAuthor {
     width: 40px;
+    color: var(--myVar-creme);
     background-color: var(--myVar-darkBlue) ;
 }
 #bookForm {

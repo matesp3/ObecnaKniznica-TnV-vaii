@@ -1,39 +1,36 @@
 window.onload = (event) => {
 
-    document.getElementById('btnAddAnotherAuthor').onclick = () => {
+    document.getElementById('skusobne').onclick = () => {
+
         const container =document.getElementById('authorsOfBookContainer');
-        const currentNumOfAuthors = container.children.length + 1;
-        // create rowDiv
-        let rowDiv = document.createElement('div');
-        rowDiv.className = "row mt-3"
-        container.appendChild(rowDiv);
+        const currentNumOfAuthors = (container.children.length / 2) + 1;
         // create label
         let newLabel = document.createElement('label');
         newLabel.htmlFor = 'aboutAuthorInputs' + currentNumOfAuthors;
-        newLabel.className = "col-form-label col-md-2";
+        newLabel.className = "col-form-label col-md-2 mt-md-3";
         newLabel.innerText = 'Autor ' + currentNumOfAuthors;
-        rowDiv.appendChild(newLabel);
-        //create containerDiv
-        let containerDiv = document.createElement('div');
-        containerDiv.id = "aboutAuthorInputs" + currentNumOfAuthors;
-        containerDiv.className = "col-md-8";
-        rowDiv.appendChild(containerDiv);
-        // create rowDiv
-        let innerRowDiv = document.createElement('div');
-        innerRowDiv.className = "row";
-        containerDiv.appendChild(innerRowDiv);
+        container.appendChild(newLabel);
+        //create inputsContainer
+        let inputsContainer = document.createElement('div');
+        inputsContainer.id = "aboutAuthorInputs" + currentNumOfAuthors;
+        inputsContainer.className = "col-md-9 d-flex flex-wrap flex-md-nowrap mt-md-3";
+        container.appendChild(inputsContainer);
         // create divForNameInput
         let divForNameInput = document.createElement('div');
-        divForNameInput.className = "col-md-5 me-lg-5";
-        innerRowDiv.appendChild(divForNameInput);
+        divForNameInput.className = "col-12 col-md-5";
+        inputsContainer.appendChild(divForNameInput);
+        // create pomDiv
+        let pomDiv = document.createElement('div');
+        pomDiv.className = "col-md-2";
+        inputsContainer.appendChild(pomDiv);
         // create divForSurnameInput
         let divForSurnameInput = document.createElement('div');
-        divForSurnameInput.className = "col-md-5 me-lg-5";
-        innerRowDiv.appendChild(divForSurnameInput);
+        divForSurnameInput.className = "col-12 col-md-5";
+        inputsContainer.appendChild(divForSurnameInput);
         // create inputName
         let inputName = document.createElement('input');
         inputName.id = "author" + currentNumOfAuthors + "Name";
-        inputName.name = "name[]";
+        inputName.name = "name" + currentNumOfAuthors;
         inputName.className = "form-control";
         inputName.type = "text";
         inputName.placeholder = "Meno";
@@ -42,7 +39,7 @@ window.onload = (event) => {
         // create inputSurname
         let inputSurname = document.createElement('input');
         inputSurname.id = "author" + currentNumOfAuthors + "Surname";
-        inputSurname.name = "surname[]";
+        inputSurname.name = "surname" + currentNumOfAuthors;
         inputSurname.className = "form-control";
         inputSurname.type = "text";
         inputSurname.placeholder = "Priezvisko";
@@ -50,17 +47,3 @@ window.onload = (event) => {
         divForSurnameInput.appendChild(inputSurname);
     }
 }
-//
-// <div class="row mt-3">
-//     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
-//     <div class="col-md-8" id="aboutAuthorInputs1">
-//         <div class="row">
-//             <div class="col-md-5 me-lg-5">
-//                 <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
-//             </div>
-//             <div class="col-md-5 ms-lg-5">
-//                 <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
-//             </div>
-//         </div>
-//     </div>
-// </div>

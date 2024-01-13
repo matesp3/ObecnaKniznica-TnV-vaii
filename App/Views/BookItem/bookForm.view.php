@@ -4,11 +4,11 @@
 /** @var Array $data  */
 ?>
      <form class="needs-validation" method="post" action="<?= $link->url('bookItem.save') ?>" enctype="multipart/form-data">
-         <div id="bookForm" class="container py-3 ps-5 my-5 rounded-3" >
+         <div id="bookForm" class="container py-3 px-5 my-5 rounded-3" >
              <input type="hidden" name="id" value="<?= @$data['bookItem']?->getId() ?>">
              <div class="row mb-3">
                  <label for="bookPictureInput" class="col-form-label col-md-2">Ilustračný obrázok</label>
-                 <div class="col-md-8 was-validated">
+                 <div class="col-md-9 was-validated">
                      <input class="form-control" type="file" name="filePath" id="bookPictureInput" required>
                      <?php if (@$data['bookItem'] != null): ?>
                      <div>
@@ -25,40 +25,34 @@
 
              <div class="row mb-3">
                  <label for="booksName " class=" col-form-label col-md-2">Názov knihy</label>
-                 <div class="col-md-8 was-validated">
+                 <div class="col-md-9 was-validated">
                      <input class="form-control" name="booksName" value="<?= @$data['bookItem']?->getBookName()?>" type="text" id="bookName" placeholder="Názov" required>
                  </div>
              </div>
 
              <div class="row mb-3 was-validated" id="authorsOfBookContainer">
                  <?php if (@$data['authors'] == null) : ?>
-                     <div class="row">
-                         <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
-                         <div class="col-md-8" id="aboutAuthorInputs1">
-                             <div class="row">
-                                 <div class="col-md-5 me-lg-5">
-                                     <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
-                                 </div>
-                                 <div class="col-md-5 me-lg-5">
-                                     <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
-                                 </div>
-                             </div>
+                     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
+                     <div class="col-md-9 d-flex flex-wrap flex-md-nowrap" id="aboutAuthorInputs1">
+                         <div class="col-12 col-md-5">
+                               <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
+                         </div>
+                             <div class="col-md-2"></div>
+                         <div class="col-12 col-md-5">
+                                <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                          </div>
                      </div>
                  <?php else : ?>
                      <?php foreach (@$data['authors'] as $author) : ?>
                          <!--         zaciatok patternu pre javascript -->
-                         <div class="row">
-                             <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
-                             <div class="col-md-8" id="aboutAuthorInputs1">
-                                 <div class="row">
-                                     <div class="col-md-5 me-lg-5">
-                                         <input class="form-control" id="author1Name" value="<?= @$author['name'] ?>" name="authorName1" type="text" placeholder="Meno" required>
-                                     </div>
-                                     <div class="col-md-5 me-lg-5">
-                                         <input class="form-control" id="author1Surname" value="<?= @$author['surname'] ?>" name="authorSurname1" type="text" placeholder="Priezvisko" required>
-                                     </div>
-                                 </div>
+                         <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
+                         <div class="col-md-9 d-flex flex-wrap flex-md-nowrap" id="aboutAuthorInputs1">
+                             <div class="col-12 col-md-5">
+                                 <input class="form-control" id="author1Name" value="<?= @$author['name'] ?>" name="authorName1" type="text" placeholder="Meno" required>
+                             </div>
+                             <div class="col-md-2"></div>  <!-- sluzi len pre vyplnenie priestoru pre md+ -->
+                             <div class="col-12 col-md-5">
+                                 <input class="form-control" id="author1Surname" value="<?= @$author['surname'] ?>" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                              </div>
                          </div>
                          <!--        koniec patternu pre javascript -->
@@ -68,10 +62,10 @@
              </div>
 
              <div class="row ms-1 my-3">
-                 <button class="btn btn-sm btn-primary col-1 rounded-3" type="button" id="btnAddAnotherAuthor">
-                     <i class="bi bi-plus-lg"></i>
+                 <button class="btn btn-sm btn-primary col-6 rounded-3" type="button" id="btnAddAnotherAuthor">
+                     <i class="bi bi-plus-lg" id="skusobne"></i>
                  </button>
-                 <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-2">Pridať autora</label>
+                 <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-6">Pridať autora</label>
              </div>
 
              <div class="row mt-5 mb-3">
@@ -93,8 +87,8 @@
                  </div>
              </div>
 
-             <div class="row justify-content-center">
-                 <button id="btnSubmitBookItem" type="submit" class="btn border-2 col-2 col-md-1 mt-5 me-5">Uložiť</button>
+             <div class="row justify-content-center align-items-center">
+                 <button id="btnSubmitBookItem" type="submit" class="btn border-2 text-center col-3 col-sm-2 col-lg-1 mt-5">Uložiť</button>
              </div>
          </div>
      </form>
