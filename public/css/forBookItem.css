@@ -1,9 +1,13 @@
-.cardBookItem {
-    width: 100%;
+.card:hover .cardBookItem {
+    background-color: rgba(91, 88, 88, 0.06);
 }
 
-.cardBookItem:hover {
-    background-color: rgba(222, 211, 211, 0.15);
+.card:hover .reservingArea {
+    background-color: rgba(91, 88, 88, 0.12);
+}
+
+.cardBookItem {
+    width: 100%;
 }
 
 .sneakPeekImg {
@@ -21,6 +25,7 @@
 
 .reservingArea {
     width: 100%;
+    background-color: var(--myVar-creme);
 }
 
 .editSection {

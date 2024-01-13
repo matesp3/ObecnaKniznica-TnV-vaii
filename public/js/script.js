@@ -1,13 +1,13 @@
 window.onload = (event) => {
 
-    document.getElementById('skusobne').onclick = () => {
+    document.getElementById('btnAddAnotherAuthor').onclick = () => {
 
         const container =document.getElementById('authorsOfBookContainer');
         const currentNumOfAuthors = (container.children.length / 2) + 1;
         // create label
         let newLabel = document.createElement('label');
         newLabel.htmlFor = 'aboutAuthorInputs' + currentNumOfAuthors;
-        newLabel.className = "col-form-label col-md-2 mt-md-3";
+        newLabel.className = "col-form-label col-md-2 mt-3";
         newLabel.innerText = 'Autor ' + currentNumOfAuthors;
         container.appendChild(newLabel);
         //create inputsContainer
@@ -21,7 +21,7 @@ window.onload = (event) => {
         inputsContainer.appendChild(divForNameInput);
         // create pomDiv
         let pomDiv = document.createElement('div');
-        pomDiv.className = "col-md-2";
+        pomDiv.className = "col-12 col-md-1 mt-1 mt-md-0";
         inputsContainer.appendChild(pomDiv);
         // create divForSurnameInput
         let divForSurnameInput = document.createElement('div');
@@ -45,5 +45,15 @@ window.onload = (event) => {
         inputSurname.placeholder = "Priezvisko";
         inputSurname.required = true;
         divForSurnameInput.appendChild(inputSurname);
+        // create delete button
+        let btnDiv = document.createElement('div');
+        btnDiv.className = "col-12 col-md-1 mt-1 mt-md-0 d-flex justify-content-end align-items-center";
+        inputsContainer.appendChild(btnDiv);
+        // create button for deleting
+        let deleteBtn = document.createElement('button');
+        deleteBtn.type = "button";
+        deleteBtn.className = "btn btn-sm btn-outline-danger";
+        btnDiv.appendChild(deleteBtn);
+        deleteBtn.innerHTML = `<i class='bi bi-trash'></i>`;
     }
 }

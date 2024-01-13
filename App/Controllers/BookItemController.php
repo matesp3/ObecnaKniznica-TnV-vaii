@@ -14,6 +14,8 @@ use App\Core\HTTPException;
 class BookItemController extends AControllerBase
 {
     const AUTHORS_SEPARATOR = ', ';
+    const DEFAULT_PICTURE_PATH = "default-picture.png";
+
     /**
      * @inheritDoc
      */
@@ -27,15 +29,27 @@ class BookItemController extends AControllerBase
         $id = (int) $this->request()->getValue('id');
         $bookItem = BookItem::getOne($id);
 
-        if (!is_null($bookItem)) {
-            if ($bookItem->getPicturePath() != null)
-                FileStorage::deleteFile($bookItem->getPicturePath());
-        }
-        else {
+        $newFileName = $this->request()->getFiles()['filePath'];
+
+        if (is_null($bookItem)) {  // create mode
             $bookItem = new BookItem();
+            if (is_null($newFileName)) {
+                $newFileName = self::DEFAULT_PICTURE_PATH;
+            }
+            else {
+                $newFileName = FileStorage::saveFile($this->request()->getFiles()['filePath']);
+            }
+
+        } else {                  // edit mode
+            if (!is_null($newFileName)) {
+                if (strcmp($bookItem->getPicturePath(), self::DEFAULT_PICTURE_PATH) != 0) // don't delete default picture
+                    FileStorage::deleteFile($bookItem->getPicturePath());
+            }
+            else {                // nothing is about to change
+                $newFileName = is_null($bookItem->getPicturePath()) ? self::DEFAULT_PICTURE_PATH : $bookItem->getPicturePath();
+            }
         }
 
-        $newFileName = FileStorage::saveFile($this->request()->getFiles()['filePath']);
         $bookItem->setPicturePath($newFileName);
 
         $bookName = $this->request()->getValue('booksName');
@@ -96,10 +110,12 @@ class BookItemController extends AControllerBase
             throw new HTTPException(404, "Odstraňovaný príspevok nie je možné odstrániť, lebo neexistuje!");
         }
 
+        $i = 0;
         $authors = [];
         foreach (explode(', ',$bookItem->getAuthor()) as $oneAuthor) {
             $authors[] = ['surname' => explode(self::AUTHORS_SEPARATOR, $oneAuthor, 2)[0],
-                          'name' => explode(' ', $oneAuthor, 2)[1]];
+                          'name' => explode(' ', $oneAuthor, 2)[1],
+                          'description' => 'Autor (' . $i++ . ')'];
         }
 
         return $this->html([

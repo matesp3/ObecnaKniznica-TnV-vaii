@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="row g-0 reservingArea card-footer">
+    <div class="row g-0 card-footer reservingArea">
         <div class="col-md-6 d-flex justify-content-md-start editSection">
             <a class="btn btn-danger" href="<?= $link->url('bookItem.delete',['id' => $bookItem->getId()]) ?>">
                 <i class="bi bi-trash"></i> vymazať

@@ -10,9 +10,7 @@
 }
 
 #btnSubmitBookItem {
-    /*border-color: var(--myVar-darkBlue);*/
     position: relative;
-    /*transform: translateX(50%);*/
     border-color: var(--myVar-darkBlue);
 }
 

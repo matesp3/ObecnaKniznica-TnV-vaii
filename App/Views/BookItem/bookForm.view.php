@@ -8,8 +8,8 @@
              <input type="hidden" name="id" value="<?= @$data['bookItem']?->getId() ?>">
              <div class="row mb-3">
                  <label for="bookPictureInput" class="col-form-label col-md-2">Ilustračný obrázok</label>
-                 <div class="col-md-9 was-validated">
-                     <input class="form-control" type="file" name="filePath" id="bookPictureInput" required>
+                 <div class="col-md-9">
+                     <input class="form-control" type="file" name="filePath" id="bookPictureInput">
                      <?php if (@$data['bookItem'] != null): ?>
                      <div>
                          Predošlý obrázok
@@ -37,24 +37,32 @@
                          <div class="col-12 col-md-5">
                                <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>
                          </div>
-                             <div class="col-md-2"></div>
+                         <div class="col-12 col-md-1 mt-1 mt-md-0"></div>
                          <div class="col-12 col-md-5">
                                 <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                          </div>
+                         <div class="col-12 col-md-1 mt-1 mt-md-0"> </div>
                      </div>
+<!--                     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>-->
+<!--                     <div class="col-md-9 d-flex flex-wrap flex-md-nowrap" id="aboutAuthorInputs1">-->
+<!--                         <div class="col-12 col-md-5">-->
+<!--                             <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>-->
+<!--                         </div>-->
+<!--                         <div class="col-12 col-md-1 mt-1 mt-md-0"></div>-->
+<!--                         <div class="col-12 col-md-5">-->
+<!--                             <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>-->
+<!--                         </div>-->
+<!---->
+<!--                         <div class="col-12 col-md-1 mt-1 mt-md-0 d-flex justify-content-end align-items-center" >-->
+<!--                             <button type="button" class="btn btn-sm btn-outline-danger">-->
+<!--                                 <i class="bi bi-trash"></i>-->
+<!--                             </button>-->
+<!--                         </div>-->
+<!--                     </div>-->
                  <?php else : ?>
                      <?php foreach (@$data['authors'] as $author) : ?>
                          <!--         zaciatok patternu pre javascript -->
-                         <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>
-                         <div class="col-md-9 d-flex flex-wrap flex-md-nowrap" id="aboutAuthorInputs1">
-                             <div class="col-12 col-md-5">
-                                 <input class="form-control" id="author1Name" value="<?= @$author['name'] ?>" name="authorName1" type="text" placeholder="Meno" required>
-                             </div>
-                             <div class="col-md-2"></div>  <!-- sluzi len pre vyplnenie priestoru pre md+ -->
-                             <div class="col-12 col-md-5">
-                                 <input class="form-control" id="author1Surname" value="<?= @$author['surname'] ?>" name="authorSurname1" type="text" placeholder="Priezvisko" required>
-                             </div>
-                         </div>
+                         <?= require "authors.view.php"?>
                          <!--        koniec patternu pre javascript -->
                      <?php endforeach; ?>
                  <?php endif; ?>
@@ -63,7 +71,7 @@
 
              <div class="row ms-1 my-3">
                  <button class="btn btn-sm btn-primary col-6 rounded-3" type="button" id="btnAddAnotherAuthor">
-                     <i class="bi bi-plus-lg" id="skusobne"></i>
+                     <i class="bi bi-plus-lg"></i>
                  </button>
                  <label for="btnAddAnotherAuthor" id="labelForBtnAdd" class="col-form-label col-6">Pridať autora</label>
              </div>
