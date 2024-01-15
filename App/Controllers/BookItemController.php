@@ -112,12 +112,24 @@ class BookItemController extends AControllerBase
 
         $i = 0;
         $authors = [];
-        foreach (explode(', ',$bookItem->getAuthor()) as $oneAuthor) {
-            $authors[] = ['surname' => explode(self::AUTHORS_SEPARATOR, $oneAuthor, 2)[0],
-                          'name' => explode(' ', $oneAuthor, 2)[1],
-                          'description' => 'Autor (' . $i++ . ')'];
-        }
+//        foreach (explode(', ',$bookItem->getAuthor()) as $oneAuthor) {
+//            $authors[] = ['surname' => explode(self::AUTHORS_SEPARATOR, $oneAuthor, 2)[0],
+//                          'name' => explode(' ', $oneAuthor, 2)[1],
+//                          'description' => 'Autor (' . $i++ . ')'];
+//        }
+        $authors[] = ['surname' => 'Poljak',
+            'name' => 'Matej',
+        ];
+        $authors[] = ['surname' => 'Stefanova',
+            'name' => 'Anna',
+        ];
 
+        $authors[] = ['surname' => 'Poljak',
+            'name' => 'Matus',
+        ];
+        $authors[] = ['surname' => 'Stefanov',
+            'name' => 'Marek',
+        ];
         return $this->html([
                 'bookItem' => $bookItem,
                 'authors' => $authors

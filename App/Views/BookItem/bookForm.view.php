@@ -41,32 +41,20 @@
                          <div class="col-12 col-md-5">
                                 <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>
                          </div>
-                         <div class="col-12 col-md-1 mt-1 mt-md-0"> </div>
+                         <div class="col-12 col-md-1 mt-1 mt-md-0 d-flex justify-content-end align-items-center" >
+                             <button type="button" class="btn btn-sm btn-outline-danger deleteButton" id="delBtn-1">
+                                 <i class="bi bi-trash" id="iTrash-1"></i>
+                             </button>
+                         </div>
                      </div>
-<!--                     <label for="aboutAuthorInputs1" class="col-form-label col-md-2">Autor</label>-->
-<!--                     <div class="col-md-9 d-flex flex-wrap flex-md-nowrap" id="aboutAuthorInputs1">-->
-<!--                         <div class="col-12 col-md-5">-->
-<!--                             <input class="form-control" id="author1Name" name="authorName1" type="text" placeholder="Meno" required>-->
-<!--                         </div>-->
-<!--                         <div class="col-12 col-md-1 mt-1 mt-md-0"></div>-->
-<!--                         <div class="col-12 col-md-5">-->
-<!--                             <input class="form-control" id="author1Surname" name="authorSurname1" type="text" placeholder="Priezvisko" required>-->
-<!--                         </div>-->
-<!---->
-<!--                         <div class="col-12 col-md-1 mt-1 mt-md-0 d-flex justify-content-end align-items-center" >-->
-<!--                             <button type="button" class="btn btn-sm btn-outline-danger">-->
-<!--                                 <i class="bi bi-trash"></i>-->
-<!--                             </button>-->
-<!--                         </div>-->
-<!--                     </div>-->
-                 <?php else : ?>
-                     <?php foreach (@$data['authors'] as $author) : ?>
-                         <!--         zaciatok patternu pre javascript -->
-                         <?= require "authors.view.php"?>
-                         <!--        koniec patternu pre javascript -->
-                     <?php endforeach; ?>
-                 <?php endif; ?>
 
+                 <?php else :
+                     $i = 1;
+                    foreach (@$data['authors'] as $author) :
+                        require "authors.view.php"; // js pattern for row about author
+                        $i++;
+                    endforeach;
+                 endif; ?>
              </div>
 
              <div class="row ms-1 my-3">
