@@ -30,20 +30,20 @@ window.onload = (event) => {
             const pos = getPosition("-", currentBtn.id);
             if (pos != undefined) {
                 // let currentInputSurname = currentBtn.previousElementSibling;
-                let currentInputSurname = document.getElementById(`author${pos}Surname`);
-                let currentInputName = document.getElementById(`author${pos}Name`);
-                let currentParentDiv = document.getElementById(`aboutAuthorInputs${pos}`);
+                let currentInputSurname = document.getElementById(`aSurname-${pos}`);
+                let currentInputName = document.getElementById(`aName-${pos}`);
+                let currentParentDiv = document.getElementById(`aboutAuthorInputs-${pos}`);
                 let currentLabel = currentParentDiv.previousElementSibling;
                 let currentBtnIcon = document.getElementById(`iTrash-${pos}`);
 
                 currentBtnIcon.id = `iTrash-${i}`;
                 currentBtn.id = `delBtn-${i}`;
-                currentInputSurname.id = `author${i}Surname`;
-                currentInputSurname.name = `authorSurname${i}`;
-                currentInputName.id = `author${i}Name`;
-                currentInputName.name = `authorName${i}`;
-                currentParentDiv.id = `aboutAuthorInputs${i}`;
-                currentLabel.htmlFor = `aboutAuthorInputs${i}`;
+                currentInputSurname.id = `aSurname-${i}`;
+                currentInputSurname.name = `surname-${i}`;
+                currentInputName.id = `aName-${i}`;
+                currentInputName.name = `name-${i}`;
+                currentParentDiv.id = `aboutAuthorInputs-${i}`;
+                currentLabel.htmlFor = `aboutAuthorInputs-${i}`;
             }
         }
     }
@@ -55,7 +55,7 @@ window.onload = (event) => {
         if (i == null)
             return;
 
-        const divToDelete = document.getElementById(`aboutAuthorInputs${i}`);
+        const divToDelete = document.getElementById(`aboutAuthorInputs-${i}`);
         const labelToDelete = divToDelete.previousElementSibling;
         labelToDelete.remove();
         divToDelete.remove(); // deletes all child nodes (divs + inputs + button)
@@ -82,13 +82,13 @@ window.onload = (event) => {
         const currentNumOfAuthors = (container.children.length / 2) + 1; // divided by to due to labels children
         // create label
         let newLabel = document.createElement('label');
-        newLabel.htmlFor = 'aboutAuthorInputs' + currentNumOfAuthors;
+        newLabel.htmlFor = 'aboutAuthorInputs-' + currentNumOfAuthors;
         newLabel.className = "col-form-label col-md-2 mt-3";
         newLabel.innerText = 'Autor';
         container.appendChild(newLabel);
         //create inputsContainer
         let inputsContainer = document.createElement('div');
-        inputsContainer.id = "aboutAuthorInputs" + currentNumOfAuthors;
+        inputsContainer.id = "aboutAuthorInputs-" + currentNumOfAuthors;
         inputsContainer.className = "col-md-9 d-flex flex-wrap flex-md-nowrap mt-md-3";
         container.appendChild(inputsContainer);
         // create divForNameInput
@@ -105,8 +105,8 @@ window.onload = (event) => {
         inputsContainer.appendChild(divForSurnameInput);
         // create inputName
         let inputName = document.createElement('input');
-        inputName.id = "author" + currentNumOfAuthors + "Name";
-        inputName.name = "name" + currentNumOfAuthors;
+        inputName.id = "aName-" + currentNumOfAuthors;
+        inputName.name = "name-" + currentNumOfAuthors;
         inputName.className = "form-control";
         inputName.type = "text";
         inputName.placeholder = "Meno";
@@ -114,8 +114,8 @@ window.onload = (event) => {
         divForNameInput.appendChild(inputName);
         // create inputSurname
         let inputSurname = document.createElement('input');
-        inputSurname.id = "author" + currentNumOfAuthors + "Surname";
-        inputSurname.name = "surname" + currentNumOfAuthors;
+        inputSurname.id = "aSurname-" + currentNumOfAuthors;
+        inputSurname.name = "surname-" + currentNumOfAuthors;
         inputSurname.className = "form-control";
         inputSurname.type = "text";
         inputSurname.placeholder = "Priezvisko";

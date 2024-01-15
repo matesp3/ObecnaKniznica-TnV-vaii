@@ -29,11 +29,11 @@ class BookItemController extends AControllerBase
         $id = (int) $this->request()->getValue('id');
         $bookItem = BookItem::getOne($id);
 
-        $newFileName = $this->request()->getFiles()['filePath'];
+        $newFileName = $this->request()->getFiles()['filePath']['name'];
 
         if (is_null($bookItem)) {  // create mode
             $bookItem = new BookItem();
-            if (is_null($newFileName)) {
+            if (strlen($newFileName) == 0) {
                 $newFileName = self::DEFAULT_PICTURE_PATH;
             }
             else {
@@ -80,12 +80,10 @@ class BookItemController extends AControllerBase
         $bookItem->setDescription($this->request()->getValue('description'));
 
         $bookItem->save();
-
+//        return $this->redirect($this->url("catalogue.index"));
         return $this->html(['authors' => $authors, 'str' => $bookItem->getAuthor()],'index'); // vrati 'index' view v BookItem
         // TODO
         // * prerobit autora na tabulku, nie dlhy column autorov...
-        // * skusit dat pri tom autribute name v javascripte tie polia name[] a surname[]
-        // * pri edite bookItemu, pokial nemenim knizku, tak necham ulozenu tu, co som mal predtym
     }
 
     public function delete() : Response
@@ -96,7 +94,9 @@ class BookItemController extends AControllerBase
         if (is_null($bookItem)) {
             throw new HTTPException(404, "Odstraňovaný  príspevok nie je možné odstrániť, lebo neexistuje!");
         }
-        FileStorage::deleteFile($bookItem->getPicturePath());
+        if (strcmp($bookItem->getPicturePath(), self::DEFAULT_PICTURE_PATH) != 0)
+            FileStorage::deleteFile($bookItem->getPicturePath());
+
         $bookItem->delete();
         return new RedirectResponse($this->url("home.index"));
     }
