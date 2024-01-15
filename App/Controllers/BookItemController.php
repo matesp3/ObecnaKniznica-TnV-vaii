@@ -130,8 +130,6 @@ class BookItemController extends AControllerBase
 //        $bookItem->save();
 ////        return $this->redirect($this->url("catalogue.index"));
 //        return $this->html(['authors' => $authors, 'str' => $bookItem->getAuthor()],'index'); // vrati 'index' view v BookItem
-//        // TODO
-        // * prerobit autora na tabulku, nie dlhy column autorov...
     }
 
     public function delete() : Response
