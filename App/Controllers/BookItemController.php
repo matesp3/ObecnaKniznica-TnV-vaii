@@ -27,24 +27,23 @@ class BookItemController extends AControllerBase
     public function save() : Response
     {
         $pattern = '/^[0-9a-zA-Z' . Configuration::UNI_SLOVAK_LETTERS . ']/u';
-        $pom = substr($this->request()->getValue('booksName'), 0, 2);
-        $result = preg_match($pattern, $pom);
-        $str = mb_convert_case($this->request()->getValue('name-1'), MB_CASE_TITLE, "UTF-8");
-        $a = htmlspecialchars($this->request()->getValue('amount'));
-        $b = (double) htmlspecialchars($this->request()->getValue('amount'));
-//        $b = (int)$a;
-        $vysledok = is_int($a);
-        $vysledok = is_int($b);
+//        $pom = substr($this->request()->getValue('booksName'), 0, 2);
+//        $result = preg_match($pattern, $pom);
+//        $str = mb_convert_case($this->request()->getValue('name-1'), MB_CASE_TITLE, "UTF-8");
+//        $a = htmlspecialchars($this->request()->getValue('amount'));
+//        $b = (double) htmlspecialchars($this->request()->getValue('amount'));
+////        $b = (int)$a;
+//        $vysledok = is_int($a);
+//        $vysledok = is_int($b);
 
 //-------------------------------------------------------
         $params      = [];
         $errors      = [];
         $this->checkAndPrepareUserInputs($params, $errors);
-//        if (!is_null($errors) && count($errors) > 0)
-//        {
-//            // TODO: spracovanie chyb v bookForm.view.php
-//            return $this->html(['errors'=> $errors, 'previousInputs' => $params], 'bookForm');
-//        }
+        if (!is_null($errors) && count($errors) > 0)
+        {
+            return $this->html(['errors'=> $errors, 'previousInputs' => $params], 'bookForm');
+        }
 
 //        $id          = (int) $this->request()->getValue('id');
 //        $bookItem    = BookItem::getOne($id) ?? new BookItem();
@@ -133,8 +132,6 @@ class BookItemController extends AControllerBase
         return null;                 // an author already exists
     }
 
-//    private function handleNewFileInput(&$bookItem, &$newFileName) {
-
     /** NOTE! It is expected, that file name from HTTP POST request is valid.
      * @param string|null $oldFileName - name of previously saved image within book item instance
      * @return string|null name of picture to be saved inside book item instance to DB
@@ -155,35 +152,76 @@ class BookItemController extends AControllerBase
      */
     private function checkAndPrepareUserInputs(&$checkedUserInputs, &$foundErrors): void
     {
-        $userInputs['fileName' ]  = null; // values: fileName | booksName | name-1[-n] | surname-1[-n] | amount | description
+        $checkedUserInputs['fileName'   ]  = null; // values: fileName | booksName | name-1[-n] | surname-1[-n] | amount | description
+        $checkedUserInputs['booksName'  ]  = null;
+        $checkedUserInputs['name-1'     ]  = null;
+        $checkedUserInputs['surname-1'  ]  = null;
+        $checkedUserInputs['amount'     ]  = null;
+        $strInput = htmlspecialchars($this->request()->getValue('description'));
+        $checkedUserInputs['description']  = strlen($strInput) == 1 && ord($strInput[0]) == 32 ? null : $strInput;
 
-        $userInputs['name-1'   ]  = null;
-        $userInputs['surname-1']  = null;
-        $userInputs['amount'   ]  = null;
-        $userInputs['description'] = $this->request()->getValue('description');
         $errorCode = $this->request()->getFiles()['pictureFile']['error'];
-
-        if ($errorCode != UPLOAD_ERR_NO_FILE && $errorCode != UPLOAD_ERR_OK) // UPLOAD_ERR_NO_FILE is not error, it's a choice
-            $foundErrors['fileName'] = 'Došlo k chybe pri nahrávaní súboru. [Chybový kód:(' . $errorCode . ')]';
-
         $file_type = $this->request()->getFiles()['pictureFile']['type'];
-        if (!in_array($file_type, self::IMAGE_FILE_TYPES, true)) {
-            $foundErrors['fileName'] = "Súbor je nesprávneho typu!";
+
+        if ($errorCode == UPLOAD_ERR_OK)
+        {
+           if (in_array($file_type, self::IMAGE_FILE_TYPES, true))
+               $checkedUserInputs['fileName'] = $this->request()->getFiles()['pictureFile']['name'];
+           else
+               $foundErrors['fileName'] = "Súbor je nesprávneho typu!";
         }
         else
-            $checkedUserInputs['fileName'] = $this->request()->getFiles()['pictureFile']['name'];
+        {
+            if ($errorCode != UPLOAD_ERR_NO_FILE) // UPLOAD_ERR_NO_FILE is not error, it's a choice
+                $foundErrors['fileName'] = 'Došlo k chybe pri nahrávaní súboru. [Chybový kód:(' . $errorCode . ')]';
+        }
 
         $strInput = htmlspecialchars($this->request()->getValue('booksName')); // protect against XSS
         if ($this->validateFirstLetter($strInput, true))
-            $userInputs['booksName'] = $strInput;
+            $checkedUserInputs['booksName'] = mb_convert_case($strInput, MB_CASE_TITLE, "UTF-8");
         else
             $foundErrors['booksName'] = 'Názov knihy bol zadaný v nesprávnom formáte!';
-        // TODO: dokonci ostatne atributy
+
+        $strInput = htmlspecialchars($this->request()->getValue('amount'));
+        if (strlen($strInput) == 0)
+            $foundErrors['amount'] = 'Počet dostupných kusov nebol zadaný!';
+        else
+        {
+            if (is_numeric($strInput))
+                if ( ((int)$strInput) >= 0)
+                    $checkedUserInputs['amount'] = (int) $strInput;
+                else
+                    $foundErrors['amount'] = 'Zadaný vstup nemôže byť záporné číslo!';
+            else
+                $foundErrors['amount'] = 'Zadaný vstup nie je číslo!';
+        }
+
+        $position = 1;
+        $aName    = $this->request()->getValue('name-'    . $position);
+        $aSurname = $this->request()->getValue('surname-' . $position);
+        while (!is_null($aName) && !is_null($aSurname))  // even if variables were empty strings(it means, that inputs existed, so we go further in checking
+        {
+            $aName = htmlspecialchars($aName);
+            if ($this->validateFirstLetter($aName))
+                $checkedUserInputs['name-' . $position] = mb_convert_case($aName, MB_CASE_TITLE, "UTF-8");
+            else
+            {
+                $checkedUserInputs['name-' . $position] = null; //
+                $foundErrors['name-' . $position] = 'Meno autora bola zadané v nesprávnom formáte!';
+            }
+            $aSurname = htmlspecialchars($aSurname);
+            if ($this->validateFirstLetter($aSurname))
+                $checkedUserInputs['surname-' . $position] = mb_convert_case($aSurname, MB_CASE_TITLE, "UTF-8");
+            else
+            {
+                $foundErrors['surname-' . $position] = 'Priezvisko autora bolo zadané v nesprávnom formáte!';
+                $checkedUserInputs['surname-' . $position] = null;
+            }
+            $position++;
+            $aName    = $this->request()->getValue('name-'    . $position);
+            $aSurname = $this->request()->getValue('surname-' . $position);
+        }
     }
-//`  pictureName` varchar(80)     NULL,
-//`  description` text            NULL,
-//`  available`   integer         NOT NULL DEFAULT 0,
-//`  rating`      float(5,2)      NOT NULL DEFAULT 0,
 
     /** New authors are saved, and also if relations between book item and author does not exist, it would create one
      * @param $authors - expects that array of authors is set with correct names and surnames
@@ -217,7 +255,7 @@ class BookItemController extends AControllerBase
      */
     private function validateFirstLetter($strToValidate, bool $checkWithDecimals = false) : bool
     {
-        if (!is_null($strToValidate) || strlen($strToValidate) == 0)
+        if (strlen($strToValidate) == 0) // if $strToValidate is null, result is 0
             return false;
 
         $pattern = "";
