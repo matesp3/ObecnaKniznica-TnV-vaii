@@ -1,3 +1,5 @@
+const unicodeSlovakLetters = "\u{C1}\u{C4}\u{C9}\u{CD}\u{D3}\u{D4}\u{DA}\u{DD}\u{E1}\u{E4}\u{E9}\u{ED}\u{F3}\u{F4}\u{FA}\u{FD}\u{10C}\u{10D}\u{10E}\u{10F}\u{139}\u{13A}\u{13D}\u{13E}\u{147}\u{148}\u{154}\u{155}\u{160}\u{161}\u{164}\u{165}\u{17D}\u{17E}";
+
 window.onload = (event) => {
     // function higlightLabel(event) {
     //     const authorLabel = document.getElementById("aboutAuthorInputs1").previousElementSibling;
@@ -9,6 +11,25 @@ window.onload = (event) => {
     //         authorLabel.styles.borderRadius = "10px";
     //     }
     // }
+
+
+    function checkFileSize() {
+        const fileInput = document.getElementById('bookPictureInput');
+        if (fileInput != null) {
+            const infoElement = document.getElementById('fInfo');
+
+            if (fileInput.files.length > 0) {
+                let fSize = fileInput.files.item(0).size / Math.pow(2,20); // 2^20 bytov - 1 MB
+                fSize = Math.round(fSize * 100) / 100;
+                infoElement.textContent = `Veľkosť nového obrázka: ${fSize} MB`
+                infoElement.style.color = "var(--myVar-darkBlue)";
+            }
+            else {
+                infoElement.textContent = "Obrázok nebol vybraný/zmenený."
+                infoElement.style.color = "var(--myVar-alert)";
+            }
+        }
+    }
 
     function getPosition(precedingChar, identificator) {
         const params = identificator.toString().split(precedingChar);
@@ -44,6 +65,7 @@ window.onload = (event) => {
                 currentInputName.name = `name-${i}`;
                 currentParentDiv.id = `aboutAuthorInputs-${i}`;
                 currentLabel.htmlFor = `aboutAuthorInputs-${i}`;
+                currentLabel.textContent = `Autor (${i})`;
             }
         }
     }
@@ -84,7 +106,7 @@ window.onload = (event) => {
         let newLabel = document.createElement('label');
         newLabel.htmlFor = 'aboutAuthorInputs-' + currentNumOfAuthors;
         newLabel.className = "col-form-label col-md-2 mt-3";
-        newLabel.innerText = 'Autor';
+        newLabel.innerText = `Autor (${currentNumOfAuthors})`;
         container.appendChild(newLabel);
         //create inputsContainer
         let inputsContainer = document.createElement('div');
@@ -111,6 +133,7 @@ window.onload = (event) => {
         inputName.type = "text";
         inputName.placeholder = "Meno";
         inputName.required = true;
+        inputName.pattern = `^[a-zA-Z${unicodeSlovakLetters}].*`;
         divForNameInput.appendChild(inputName);
         // create inputSurname
         let inputSurname = document.createElement('input');
@@ -120,6 +143,7 @@ window.onload = (event) => {
         inputSurname.type = "text";
         inputSurname.placeholder = "Priezvisko";
         inputSurname.required = true;
+        inputSurname.pattern = `^[a-zA-Z${unicodeSlovakLetters}].*`;
         divForSurnameInput.appendChild(inputSurname);
         // create delete button
         let btnDiv = document.createElement('div');
@@ -165,4 +189,6 @@ window.onload = (event) => {
     let addAuthorBtn = document.getElementById('btnAddAnotherAuthor');
     if (addAuthorBtn != null)
         addAuthorBtn.onclick = () => { addAuthorInputs(); };
+
+    document.getElementById('bookPictureInput').onchange = () => { checkFileSize(); };
 }

@@ -11,7 +11,7 @@ class Author extends Model
 
     protected string $name;
     protected string $surname;
-    protected string $created;
+    protected string $created = "not defined";
 
     public static function getAuthor(string $name, string $surname) : ?Author
     {

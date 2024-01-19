@@ -12,12 +12,11 @@ use App\Core\ErrorHandler;
  */
 class Configuration
 {
-    /**
-     * App name
-     */
+    /** App name */
     public const APP_NAME = 'Obecná knižnica Teplička nad Váhom';
+    public const DEFAULT_PICTURE = "default-picture.png";
     public const FW_VERSION = '2.2';
-
+    public const UNI_SLOVAK_LETTERS = "\u{C1}\u{C4}\u{C9}\u{CD}\u{D3}\u{D4}\u{DA}\u{DD}\u{E1}\u{E4}\u{E9}\u{ED}\u{F3}\u{F4}\u{FA}\u{FD}\u{10C}\u{10D}\u{10E}\u{10F}\u{139}\u{13A}\u{13D}\u{13E}\u{147}\u{148}\u{154}\u{155}\u{160}\u{161}\u{164}\u{165}\u{17D}\u{17E}";
     /**
      * DB settings
      */
@@ -37,7 +36,7 @@ class Configuration
     /**
      * Add all SQL queries after app output
      */
-    public const SHOW_SQL_QUERY = false;
+    public const SHOW_SQL_QUERY = true;
 
     /**
      * Show detailed stacktrace using default exception handler. Should be used only for development.

@@ -9,20 +9,15 @@ class BookItem extends Model
     protected ?int $id = null;
 
     protected string $bookName;
-    protected string $author;
-    protected ?string $picturePath = null;
+    protected ?string $pictureName = null;
     protected ?string $description = null;
-    protected ?int $available = null;
-    protected ?float $rating = null;
+    protected int $available = 0;
+    protected float $rating = 0.0;
+    protected string $created = "not defined";
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getBookName(): string
@@ -35,24 +30,14 @@ class BookItem extends Model
         $this->bookName = $bookName;
     }
 
-    public function getAuthor(): string
+    public function getPictureName(): ?string
     {
-        return $this->author;
+        return $this->pictureName;
     }
 
-    public function setAuthor(string $author): void
+    public function setPictureName(?string $pictureName): void
     {
-        $this->author = $author;
-    }
-
-    public function getPicturePath(): ?string
-    {
-        return $this->picturePath;
-    }
-
-    public function setPicturePath(?string $picturePath): void
-    {
-        $this->picturePath = $picturePath;
+        $this->pictureName = $pictureName;
     }
 
     public function getDescription(): ?string
@@ -65,24 +50,35 @@ class BookItem extends Model
         $this->description = $description;
     }
 
-    public function getAvailable(): ?int
+    public function getAvailable(): int
     {
         return $this->available;
     }
 
-    public function setAvailable(?int $available): void
+    public function setAvailable(int $available): void
     {
         $this->available = $available;
     }
 
-    public function getRating(): ?float
+    public function getRating(): float
     {
         return $this->rating;
     }
 
-    public function setRating(?float $rating): void
+    public function setRating(float $rating): void
     {
         $this->rating = $rating;
     }
+
+    public function getCreated(): string
+    {
+        return $this->created;
+    }
+
+    public function setCreated(string $created): void
+    {
+        $this->created = $created;
+    }
+
 
 }

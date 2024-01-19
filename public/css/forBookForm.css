@@ -18,3 +18,7 @@
     background-color: var(--myVar-darkBlue);
     color: var(--myVar-creme);
 }
+
+#fInfo {
+    color: var(--myVar-darkBlue);
+}

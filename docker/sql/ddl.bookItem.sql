@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `username` varchar(25) NOT NULL,
-    `password_hash` varchar(300) NOT NULL,
+    `password_hash` varchar(100) NOT NULL,
     `role` ENUM ('admin', 'user') NOT NULL DEFAULT 'user',
     `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -18,8 +18,8 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `bookitems`;
 CREATE TABLE `bookitems` (
     `id` integer               PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `bookName` varchar(150)    NOT NULL,
-    `pictureName` varchar(300) DEFAULT NULL,
+    `bookName` varchar(90)    NOT NULL,
+    `pictureName` varchar(80) DEFAULT NULL,
     `description` text         DEFAULT NULL,
     `available` integer        NOT NULL DEFAULT 0,
     `rating` float(5,2)        NOT NULL DEFAULT 0,
@@ -33,8 +33,8 @@ ALTER TABLE `bookitems` ADD
 DROP TABLE IF EXISTS `authors`;
 CREATE TABLE `authors` (
     `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) NOT NULL,
-    `surname` varchar(255) NOT NULL,
+    `name` varchar(40) NOT NULL,
+    `surname` varchar(40) NOT NULL,
     `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

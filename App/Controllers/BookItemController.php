@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Config\Configuration;
 use App\Core\AControllerBase;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
@@ -14,9 +15,7 @@ use MongoDB\BSON\Timestamp;
 
 class BookItemController extends AControllerBase
 {
-    const AUTHORS_SEPARATOR = ', ';
-    const DEFAULT_PICTURE_PATH = "default-picture.png";
-
+    private const IMAGE_FILE_TYPES = ['image/jpeg', 'image/png'];
     /**
      * @inheritDoc
      */
@@ -25,111 +24,48 @@ class BookItemController extends AControllerBase
         return $this->html(null, 'bookForm');
     }
 
-    /**
-     * @param string $name
-     * @param string $surname
-     * @return Author|null if new author is saved, its going to be returned. If author did exist, null is returned.
-     * @throws \Exception
-     */
-    private function saveAuthorIfNeeded(string $name, string $surname) : ?Author
-    {
-        $author = Author::getAuthor($name, $surname);
-        if (is_null($author)) {      // create new author
-            $author = new Author();
-            $author->setName($name);
-            $author->setSurname($surname);
-            $author->setCreated(date('Y-m-d H:i:s'));
-            $author->save();
-            return $author;
-        }
-        return null;
-    }
-
     public function save() : Response
     {
-//        $au = Author::getAll('`name` LIKE ? AND `surname` LIKE ?', ['%tej', '%lja%']);
-//        $au = Author::getAll('`name` LIKE ?', ['Ma%'], orderBy: '`surname` desc');
-        /* 1 - check, if bookItem exists, else create new one
-         * 2 - check, if all input authors exist, else create new ones
-         *     (author is unique by the combination of name and surname, because there's nothing more to distinguish)*
-         * 3 - check, whether exists relation between author and bookitem, else create one
-         * 4 - redirection to catalogue view
-         */
-        $position = 1;
-        $aName    = $this->request()->getValue("name-" . $position);
-        $aSurname = $this->request()->getValue("surname-" . $position);
-        while (!is_null($aName)) {
-            $newAuthor = $this->saveAuthorIfNeeded($aName, $aSurname);
-            if (!is_null($newAuthor))
-            {
-                // TODO: link new author with bookitem
-                // TODO: you need to delete from DB all the users with current post, who were delete through delete button
-            }
-            ++$position;
-            $aName    = $this->request()->getValue("name-" . $position);
-            $aSurname = $this->request()->getValue("surname-" . $position);
-        }
+        $pattern = '/^[0-9a-zA-Z' . Configuration::UNI_SLOVAK_LETTERS . ']/u';
+        $pom = substr($this->request()->getValue('booksName'), 0, 2);
+        $result = preg_match($pattern, $pom);
+        $str = mb_convert_case($this->request()->getValue('name-1'), MB_CASE_TITLE, "UTF-8");
+        $a = htmlspecialchars($this->request()->getValue('amount'));
+        $b = (double) htmlspecialchars($this->request()->getValue('amount'));
+//        $b = (int)$a;
+        $vysledok = is_int($a);
+        $vysledok = is_int($b);
 
-
-
-        return $this->redirect($this->url('home.index'));
-
-//        $id = (int) $this->request()->getValue('id');
-//        $bookItem = BookItem::getOne($id);
-//
-//        $newFileName = $this->request()->getFiles()['filePath']['name'];
-//
-//        if (is_null($bookItem)) {  // create mode
-//            $bookItem = new BookItem();
-//            if (strlen($newFileName) == 0) {
-//                $newFileName = self::DEFAULT_PICTURE_PATH;
-//            }
-//            else {
-//                $newFileName = FileStorage::saveFile($this->request()->getFiles()['filePath']);
-//            }
-//
-//        } else {                  // edit mode
-//            if (!is_null($newFileName)) {
-//                if (strcmp($bookItem->getPicturePath(), self::DEFAULT_PICTURE_PATH) != 0) // don't delete default picture
-//                    FileStorage::deleteFile($bookItem->getPicturePath());
-//            }
-//            else {                // nothing is about to change
-//                $newFileName = is_null($bookItem->getPicturePath()) ? self::DEFAULT_PICTURE_PATH : $bookItem->getPicturePath();
-//            }
+//-------------------------------------------------------
+        $params      = [];
+        $errors      = [];
+        $this->checkAndPrepareUserInputs($params, $errors);
+//        if (!is_null($errors) && count($errors) > 0)
+//        {
+//            // TODO: spracovanie chyb v bookForm.view.php
+//            return $this->html(['errors'=> $errors, 'previousInputs' => $params], 'bookForm');
 //        }
+
+//        $id          = (int) $this->request()->getValue('id');
+//        $bookItem    = BookItem::getOne($id) ?? new BookItem();
 //
-//        $bookItem->setPicturePath($newFileName);
-//
-//        $bookName = $this->request()->getValue('booksName');
-//        $bookItem->setBookName($bookName);
-//
-//        $i = 1;
-//        $authors = [];
-//        $authorString = "";
-//        $authorName = $this->request()->getValue('authorName1');
-//        $authorSurname = $this->request()->getValue('authorSurname1');
-//
-//        do {
-//            $authors[] = $authorSurname . ' ' . $authorName;
-//            $authorString = $authorString . $authorSurname . ' ' . $authorName . self::AUTHORS_SEPARATOR;
-//            $i++;
-//            $authorName = $this->request()->getValue('authorName' . $i);
-//            $authorSurname = $this->request()->getValue('authorSurname' . $i);
-//        } while (!is_null($authorName));
-//
-//        $authorString = $authorString . '~';
-//        $bookItem->setAuthor(explode(self::AUTHORS_SEPARATOR . '~', $authorString)[0]); // 'mena..., ~'
-////        $bookItem->setAuthor($authorString); // 'mena..., ~'
-//
-//        $availableAmount = $this->request()->getValue('amount');
-//        $bookItem->setAvailable($availableAmount > 0 ? $availableAmount : null);
-//        if ($availableAmount < 0)
-//            return $this->html(['authors' => $authors, 'availability' => false, 'bookItem' => $bookItem], 'edit');
-//        $bookItem->setDescription($this->request()->getValue('description'));
-//
+//        $bookItem->setPictureName($this->handleNewFileName($bookItem->getPictureName()));
+//        $bookItem->setBookName($params['bookName']);
+//        $bookItem->setDescription($params['description']);
+//        $bookItem->setAvailable($params['amount']);
+//        if (strcmp($bookItem->getCreated(), "not defined") == 0)
+//            $bookItem->setCreated(date("Y-m-d h-i-s"));
 //        $bookItem->save();
-////        return $this->redirect($this->url("catalogue.index"));
-//        return $this->html(['authors' => $authors, 'str' => $bookItem->getAuthor()],'index'); // vrati 'index' view v BookItem
+//
+//        $wanted = $bookItem->getId() ??
+//            BookItem::getAll('`bookName` LIKE ? AND `created` = ?',
+//            [$bookItem->getBookName(), $bookItem->getCreated()])[0]?->getId() ?? null;
+//        if (is_null($wanted))
+//            throw new HTTPException(500, 'Databáze sa nepodarilo uložiť(nájsť) nový bookItem.');
+//
+//        $this->saveAuthorsWithRelationships($params['authors']);
+//
+        return $this->redirect($this->url("catalogue.index"), ['message' => 'Zmeny uložené']);
     }
 
     public function delete() : Response
@@ -138,13 +74,13 @@ class BookItemController extends AControllerBase
         $bookItem = BookItem::getOne($id);
 
         if (is_null($bookItem)) {
-            throw new HTTPException(404, "Odstraňovaný  príspevok nie je možné odstrániť, lebo neexistuje!");
+            throw new HTTPException(404, "Zadaný knižný prvok nie je možné odstrániť, lebo neexistuje!");
         }
-        if (strcmp($bookItem->getPicturePath(), self::DEFAULT_PICTURE_PATH) != 0)
+        if (!is_null($bookItem->getPicturePath()))
             FileStorage::deleteFile($bookItem->getPicturePath());
 
         $bookItem->delete();
-        return new RedirectResponse($this->url("home.index"));
+        return new RedirectResponse($this->url("catalogue.index"), ['msg' => 'Kniha bola z katalógu odstránená.']);
     }
 
     public function edit() : Response
@@ -153,16 +89,10 @@ class BookItemController extends AControllerBase
         $bookItem = BookItem::getOne($id);
 
         if (is_null($bookItem)) {
-            throw new HTTPException(404, "Odstraňovaný príspevok nie je možné odstrániť, lebo neexistuje!");
+            throw new HTTPException(404, "Nenašiel sa hľadaný knižný prvok na vykonanie úprav!");
         }
 
         $i = 0;
-        $authors = [];
-//        foreach (explode(', ',$bookItem->getAuthor()) as $oneAuthor) {
-//            $authors[] = ['surname' => explode(self::AUTHORS_SEPARATOR, $oneAuthor, 2)[0],
-//                          'name' => explode(' ', $oneAuthor, 2)[1],
-//                          'description' => 'Autor (' . $i++ . ')'];
-//        }
         $authors[] = ['surname' => 'Poljak',
             'name' => 'Matej',
         ];
@@ -179,7 +109,125 @@ class BookItemController extends AControllerBase
         return $this->html([
                 'bookItem' => $bookItem,
                 'authors' => $authors
-            ]
+            ], 'bookForm'
         );
+    }
+
+    /**
+     * @param string $name
+     * @param string $surname
+     * @return Author|null if new author is saved, it's going to be returned. If author did exist, null is returned.
+     * @throws \Exception
+     */
+    private function saveAuthorIfNeeded(string $name, string $surname) : ?Author
+    {
+        $author = Author::getAuthor($name, $surname);
+        if (is_null($author)) {      // create new author
+            $author = new Author();
+            $author->setName($name);
+            $author->setSurname($surname);
+            $author->setCreated(date('Y-m-d H:i:s'));
+            $author->save();
+            return $author;
+        }
+        return null;                 // an author already exists
+    }
+
+//    private function handleNewFileInput(&$bookItem, &$newFileName) {
+
+    /** NOTE! It is expected, that file name from HTTP POST request is valid.
+     * @param string|null $oldFileName - name of previously saved image within book item instance
+     * @return string|null name of picture to be saved inside book item instance to DB
+     * @throws HTTPException
+     */
+    private function handleNewFileName(?string $oldFileName) : ?string
+    {
+        if (!is_null($oldFileName) && strlen($oldFileName) != 0) {
+            FileStorage::deleteFile($oldFileName);
+            return $newFileName = FileStorage::saveFile($this->request()->getFiles()['pictureFile']);
+        }
+        return null;
+    }
+
+    /**
+     * @param $checkedUserInputs - values for later processing, either for saving or returning back to view
+     * @param $foundErrors - in case of some error occurrence, here it will be input for processing
+     */
+    private function checkAndPrepareUserInputs(&$checkedUserInputs, &$foundErrors): void
+    {
+        $userInputs['fileName' ]  = null; // values: fileName | booksName | name-1[-n] | surname-1[-n] | amount | description
+
+        $userInputs['name-1'   ]  = null;
+        $userInputs['surname-1']  = null;
+        $userInputs['amount'   ]  = null;
+        $userInputs['description'] = $this->request()->getValue('description');
+        $errorCode = $this->request()->getFiles()['pictureFile']['error'];
+
+        if ($errorCode != UPLOAD_ERR_NO_FILE && $errorCode != UPLOAD_ERR_OK) // UPLOAD_ERR_NO_FILE is not error, it's a choice
+            $foundErrors['fileName'] = 'Došlo k chybe pri nahrávaní súboru. [Chybový kód:(' . $errorCode . ')]';
+
+        $file_type = $this->request()->getFiles()['pictureFile']['type'];
+        if (!in_array($file_type, self::IMAGE_FILE_TYPES, true)) {
+            $foundErrors['fileName'] = "Súbor je nesprávneho typu!";
+        }
+        else
+            $checkedUserInputs['fileName'] = $this->request()->getFiles()['pictureFile']['name'];
+
+        $strInput = htmlspecialchars($this->request()->getValue('booksName')); // protect against XSS
+        if ($this->validateFirstLetter($strInput, true))
+            $userInputs['booksName'] = $strInput;
+        else
+            $foundErrors['booksName'] = 'Názov knihy bol zadaný v nesprávnom formáte!';
+        // TODO: dokonci ostatne atributy
+    }
+//`  pictureName` varchar(80)     NULL,
+//`  description` text            NULL,
+//`  available`   integer         NOT NULL DEFAULT 0,
+//`  rating`      float(5,2)      NOT NULL DEFAULT 0,
+
+    /** New authors are saved, and also if relations between book item and author does not exist, it would create one
+     * @param $authors - expects that array of authors is set with correct names and surnames
+     * @throws HTTPException - if there's no info about authors
+     */
+    private function saveAuthorsWithRelationships(&$authors) {
+        if (is_null($authors))
+            throw new HTTPException(500, 'Žiadne dostupné info o autoroch aktuálneho knižného prvku!');
+
+        $position = 1;
+        $aName    = $authors["name-"    . $position];
+        $aSurname = $authors["surname-" . $position];
+        while (!is_null($aName)) {
+            $newAuthor = $this->saveAuthorIfNeeded($aName, $aSurname);
+            if (!is_null($newAuthor)) // the non-null response tells us to create new relationship between book item and author
+            {
+                // TODO: link new author with bookitem
+                // TODO: you need to delete from DB all the users with current post, who were delete through delete button
+                // TODO: add category column for bookitem
+            }
+            ++$position;
+            $aName    = $authors["name-"    . $position];
+            $aSurname = $authors["surname-" . $position];
+        }
+    }
+
+    /** Checks, whether first letter is from Slovak alphabet (optionally, if it's a number)
+     * @param $strToValidate
+     * @param bool $checkWithDecimals
+     * @return true if first letter fits conditions. Return also false, when in parameter is nothing to evaluate.
+     */
+    private function validateFirstLetter($strToValidate, bool $checkWithDecimals = false) : bool
+    {
+        if (!is_null($strToValidate) || strlen($strToValidate) == 0)
+            return false;
+
+        $pattern = "";
+        $decimalsPart = $checkWithDecimals ? '0-9' : '';
+        if (strlen($strToValidate) == 1)    // in this case, we are not dealing with UNICODE character
+            $pattern = '/^['. $decimalsPart .'a-zA-Z]/';
+        else                                // checking UNICODE characters also
+            $pattern = '/^['. $decimalsPart .'a-zA-Z' . Configuration::UNI_SLOVAK_LETTERS . ']/u';
+
+        $result = preg_match($pattern, $strToValidate); // return values could be: { false | 1 | 0 }
+        return !($result === false) && $result === 1;
     }
 }
