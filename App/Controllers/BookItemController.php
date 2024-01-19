@@ -75,8 +75,8 @@ class BookItemController extends AControllerBase
         if (is_null($bookItem)) {
             throw new HTTPException(404, "Zadaný knižný prvok nie je možné odstrániť, lebo neexistuje!");
         }
-        if (!is_null($bookItem->getPicturePath()))
-            FileStorage::deleteFile($bookItem->getPicturePath());
+        if (!is_null($bookItem->getPictureName()))
+            FileStorage::deleteFile($bookItem->getPictureName());
 
         $bookItem->delete();
         return new RedirectResponse($this->url("catalogue.index"), ['msg' => 'Kniha bola z katalógu odstránená.']);
