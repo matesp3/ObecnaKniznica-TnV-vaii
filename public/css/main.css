@@ -1,0 +1,32 @@
+.invalid {
+    color: var(--myVar-invalid);
+}
+
+.valid {
+    color: var(--myVar-valid)
+}
+
+.alert {
+    color: var(--myVar-alert);
+}
+
+.normal {
+    color: black;
+}
+
+#rootContainer{/** sticking footer to the bottom>> https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/ **/
+    position: relative;
+    min-height: 100vh;
+}
+
+#web-content {
+    padding-bottom: var(--myVar-footerHeight);
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    height: var(--myVar-footerHeight);
+    width: 100%;
+    background-color: var(--myVar-greenOfFooter);
+}

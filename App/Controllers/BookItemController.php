@@ -10,12 +10,14 @@ use App\Models\Author;
 use App\Models\BookItem;
 use App\Helpers\FileStorage;
 use App\Core\HTTPException;
+use MongoDB\BSON\PackedArray;
 use MongoDB\BSON\Timestamp;
 
 
 class BookItemController extends AControllerBase
 {
     private const IMAGE_FILE_TYPES = ['image/jpeg', 'image/png'];
+    private const FILE_TYPES = ['jpeg', 'png'];
     /**
      * @inheritDoc
      */
@@ -26,44 +28,34 @@ class BookItemController extends AControllerBase
 
     public function save() : Response
     {
-        $pattern = '/^[0-9a-zA-Z' . Configuration::UNI_SLOVAK_LETTERS . ']/u';
-//        $pom = substr($this->request()->getValue('booksName'), 0, 2);
-//        $result = preg_match($pattern, $pom);
-//        $str = mb_convert_case($this->request()->getValue('name-1'), MB_CASE_TITLE, "UTF-8");
-//        $a = htmlspecialchars($this->request()->getValue('amount'));
-//        $b = (double) htmlspecialchars($this->request()->getValue('amount'));
-////        $b = (int)$a;
-//        $vysledok = is_int($a);
-//        $vysledok = is_int($b);
-
-//-------------------------------------------------------
+        $id          = (int) $this->request()->getValue('id');
         $params      = [];
         $errors      = [];
         $this->checkAndPrepareUserInputs($params, $errors);
         if (!is_null($errors) && count($errors) > 0)
         {
+            if ($id != 0)
+                $params['id'] = $id;
             return $this->html(['errors'=> $errors, 'previousInputs' => $params], 'bookForm');
         }
+        $bookItem    = BookItem::getOne($id) ?? new BookItem();
 
-//        $id          = (int) $this->request()->getValue('id');
-//        $bookItem    = BookItem::getOne($id) ?? new BookItem();
-//
-//        $bookItem->setPictureName($this->handleNewFileName($bookItem->getPictureName()));
-//        $bookItem->setBookName($params['bookName']);
-//        $bookItem->setDescription($params['description']);
-//        $bookItem->setAvailable($params['amount']);
-//        if (strcmp($bookItem->getCreated(), "not defined") == 0)
-//            $bookItem->setCreated(date("Y-m-d h-i-s"));
-//        $bookItem->save();
-//
-//        $wanted = $bookItem->getId() ??
-//            BookItem::getAll('`bookName` LIKE ? AND `created` = ?',
-//            [$bookItem->getBookName(), $bookItem->getCreated()])[0]?->getId() ?? null;
-//        if (is_null($wanted))
-//            throw new HTTPException(500, 'Databáze sa nepodarilo uložiť(nájsť) nový bookItem.');
-//
-//        $this->saveAuthorsWithRelationships($params['authors']);
-//
+        $bookItem->setPictureName($this->handleNewFileName($bookItem->getPictureName()));
+        $bookItem->setBookName($params['booksName']);
+        $bookItem->setDescription($params['description']);
+        $bookItem->setAvailable($params['amount']);
+        if (strcmp($bookItem->getCreated(), Configuration::INVALID) == 0)
+            $bookItem->setCreated(date("Y-m-d h-i-s"));
+        $bookItem->save();
+
+        $wanted = $bookItem->getId() ??
+            BookItem::getAll('`bookName` LIKE ? AND `created` = ?',
+            [$bookItem->getBookName(), $bookItem->getCreated()])[0]?->getId() ?? null;
+        if (is_null($wanted))
+            throw new HTTPException(500, 'Databáze sa nepodarilo uložiť(nájsť) nový bookItem.');
+
+        //$this->saveAuthorsWithRelationships($params['authors']);
+
         return $this->redirect($this->url("catalogue.index"), ['message' => 'Zmeny uložené']);
     }
 
@@ -92,19 +84,11 @@ class BookItemController extends AControllerBase
         }
 
         $i = 0;
-        $authors[] = ['surname' => 'Poljak',
-            'name' => 'Matej',
-        ];
-        $authors[] = ['surname' => 'Stefanova',
-            'name' => 'Anna',
-        ];
+        $authors['surname-1'] = 'Stefanova';
+        $authors['surname-2'] = 'Poljak';
+        $authors['name-1'] = 'Anna';
+        $authors['name-2'] = 'Matej';
 
-        $authors[] = ['surname' => 'Poljak',
-            'name' => 'Matus',
-        ];
-        $authors[] = ['surname' => 'Stefanov',
-            'name' => 'Marek',
-        ];
         return $this->html([
                 'bookItem' => $bookItem,
                 'authors' => $authors
@@ -139,11 +123,15 @@ class BookItemController extends AControllerBase
      */
     private function handleNewFileName(?string $oldFileName) : ?string
     {
-        if (!is_null($oldFileName) && strlen($oldFileName) != 0) {
-            FileStorage::deleteFile($oldFileName);
-            return $newFileName = FileStorage::saveFile($this->request()->getFiles()['pictureFile']);
+        $resultName = $oldFileName;
+        $newFileName = $this->request()->getFiles()['pictureFile']['name'];
+        if (strlen($newFileName) > 0)
+        {
+            if ($oldFileName && strlen($oldFileName) > 0)
+                FileStorage::deleteFile($oldFileName);
+            $resultName = FileStorage::saveFile($this->request()->getFiles()['pictureFile']);
         }
-        return null;
+        return $resultName;
     }
 
     /**
@@ -154,8 +142,6 @@ class BookItemController extends AControllerBase
     {
         $checkedUserInputs['fileName'   ]  = null; // values: fileName | booksName | name-1[-n] | surname-1[-n] | amount | description
         $checkedUserInputs['booksName'  ]  = null;
-        $checkedUserInputs['name-1'     ]  = null;
-        $checkedUserInputs['surname-1'  ]  = null;
         $checkedUserInputs['amount'     ]  = null;
         $strInput = htmlspecialchars($this->request()->getValue('description'));
         $checkedUserInputs['description']  = strlen($strInput) == 1 && ord($strInput[0]) == 32 ? null : $strInput;
@@ -168,7 +154,7 @@ class BookItemController extends AControllerBase
            if (in_array($file_type, self::IMAGE_FILE_TYPES, true))
                $checkedUserInputs['fileName'] = $this->request()->getFiles()['pictureFile']['name'];
            else
-               $foundErrors['fileName'] = "Súbor je nesprávneho typu!";
+               $foundErrors['fileName'] = 'Súbor je nesprávneho typu! Povolené typy: [' . implode(', ',self::FILE_TYPES) . ']';
         }
         else
         {
@@ -193,7 +179,7 @@ class BookItemController extends AControllerBase
                 else
                     $foundErrors['amount'] = 'Zadaný vstup nemôže byť záporné číslo!';
             else
-                $foundErrors['amount'] = 'Zadaný vstup nie je číslo!';
+                $foundErrors['amount'] = 'Zadaný vstup nebolo kladné číslo!';
         }
 
         $position = 1;
@@ -206,16 +192,16 @@ class BookItemController extends AControllerBase
                 $checkedUserInputs['name-' . $position] = mb_convert_case($aName, MB_CASE_TITLE, "UTF-8");
             else
             {
-                $checkedUserInputs['name-' . $position] = null; //
-                $foundErrors['name-' . $position] = 'Meno autora bola zadané v nesprávnom formáte!';
+                $checkedUserInputs['name-' . $position] = Configuration::INVALID;
+                $foundErrors['name-' . $position] = 'Meno v nesprávnom formáte!';
             }
             $aSurname = htmlspecialchars($aSurname);
             if ($this->validateFirstLetter($aSurname))
                 $checkedUserInputs['surname-' . $position] = mb_convert_case($aSurname, MB_CASE_TITLE, "UTF-8");
             else
             {
-                $foundErrors['surname-' . $position] = 'Priezvisko autora bolo zadané v nesprávnom formáte!';
-                $checkedUserInputs['surname-' . $position] = null;
+                $foundErrors['surname-' . $position] = 'Priezvisko v nesprávnom formáte!';
+                $checkedUserInputs['surname-' . $position] = Configuration::INVALID;
             }
             $position++;
             $aName    = $this->request()->getValue('name-'    . $position);

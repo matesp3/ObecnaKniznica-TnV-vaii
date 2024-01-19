@@ -53,15 +53,3 @@
         font-size: 50vw;
     }
 }
-
-/*#rootBody {   !* https://dev.to/nehalahmadkhan/how-to-make-footer-stick-to-bottom-of-web-page-3i14 *!*/
-/*    display: flex;*/
-/*    min-height: 100vh;*/
-/*    flex-direction: column;*/
-/*}*/
-
-#footer {
-    /*margin-top: auto;*/
-    width: 100%;
-    background-color: var(--myVar-greenOfFooter);
-}

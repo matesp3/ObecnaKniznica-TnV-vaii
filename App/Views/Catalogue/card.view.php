@@ -8,7 +8,7 @@
     <div class="card-body col-6 cardBookItem">
         <div class="row g-0">
             <div class="col-md-2">
-                <img src="<?= \App\Helpers\FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . $bookItem->getPicturePath() ?>" class="img-fluid sneakPeekImg" alt="Nahlad obalky knihy">
+                <img src="<?= \App\Helpers\FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . ($bookItem->getPictureName() ?? \App\Config\Configuration::DEFAULT_PICTURE) ?>" class="img-fluid sneakPeekImg" alt="Nahlad obalky knihy">
             </div>
             <div class="col-md-10" aria-label="productInfo">
                 <div class="row d-flex justify-content ratingInfoCover">
@@ -21,7 +21,7 @@
                         </div>
                         <div class="row">
                             <p class="card-text authorName">
-                                <small class="text-body-primary"><?= $bookItem->getAuthor() ?></small>
+                                <small class="text-body-primary"><?= 'Dorobit autorov!' ?></small>
                             </p>
                         </div>
                         <div class="row descriptionSneakPeak">

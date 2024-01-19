@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Config\Configuration;
 use App\Core\Model;
 
 class BookItem extends Model
@@ -13,7 +14,7 @@ class BookItem extends Model
     protected ?string $description = null;
     protected int $available = 0;
     protected float $rating = 0.0;
-    protected string $created = "not defined";
+    protected string $created = Configuration::INVALID;
 
     public function getId(): ?int
     {

@@ -1,6 +1,6 @@
 :root {
-    --myVar-currentDay:5;
-    --myVar-darkBlue: #2c9175;
+    --myVar-currentDay: 5;
+    --myVar-darkBlue: #14555e;
     --myVar-greyOfBackground: rgba(1, 2, 0, 0.05);
     --myVar-greyOfBorders: #867f7f;
     --myVar-creme: rgb(253, 253, 249);
@@ -10,4 +10,7 @@
     --myVar-unavailable: rgb(222, 198, 198);
     --myVar-onHover: #86084b;
     --myVar-alert: #866208FF;
+    --myVar-valid: #2c9175;
+    --myVar-invalid: #dc3545;
+    --myVar-footerHeight: 4rem;
 }
