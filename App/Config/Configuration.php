@@ -3,6 +3,7 @@
 namespace App\Config;
 
 use App\Auth\DummyAuthenticator;
+use App\Auth\MyAuthenticator;
 use App\Core\ErrorHandler;
 
 /**
@@ -37,7 +38,7 @@ class Configuration
     /**
      * Add all SQL queries after app output
      */
-    public const SHOW_SQL_QUERY = true;
+    public const SHOW_SQL_QUERY = false;
 
     /**
      * Show detailed stacktrace using default exception handler. Should be used only for development.
@@ -46,7 +47,7 @@ class Configuration
     /**
      * Class used as authenticator. Must implement IAuthenticator
      */
-    public const AUTH_CLASS = DummyAuthenticator::class;
+    public const AUTH_CLASS = MyAuthenticator::class;
     /**
      * Class used as error handler. Must implement IHandleError
      */

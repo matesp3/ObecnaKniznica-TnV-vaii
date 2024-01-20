@@ -1,11 +1,12 @@
 :root {
     --myVar-currentDay: 5;
-    --myVar-darkBlue: #14555e;
+    --myVar-customForegroundColor: #084886;
+    --myVar-customBackgroundColor:rgba(42, 210, 20, 0.47);
+    --myVar-backgroundColorOnHover: rgba(215, 248, 175, 0.29);
+    --myVar-foregroundColorOnHover:#1966be;
     --myVar-greyOfBackground: rgba(1, 2, 0, 0.05);
     --myVar-greyOfBorders: #867f7f;
     --myVar-creme: rgb(253, 253, 249);
-    --myVar-greenHeader: rgba(148, 224, 138, 0.97);
-    --myVar-greenOfFooter: rgba(42, 210, 20, 0.36);
     --myVar-available: rgba(157, 234, 157, 0.45);
     --myVar-unavailable: rgb(222, 198, 198);
     --myVar-onHover: #86084b;
@@ -13,4 +14,5 @@
     --myVar-valid: #2c9175;
     --myVar-invalid: #dc3545;
     --myVar-footerHeight: 4rem;
+    --myVar-invisible: rgba(42, 210, 20, 0.02);
 }

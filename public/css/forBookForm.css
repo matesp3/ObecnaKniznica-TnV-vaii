@@ -1,7 +1,7 @@
 #btnAddAnotherAuthor {
     width: 40px;
     color: var(--myVar-creme);
-    background-color: var(--myVar-darkBlue) ;
+    background-color: var(--myVar-customForegroundColor) ;
 }
 #bookForm {
     border-radius: 15px;
@@ -11,11 +11,11 @@
 
 #btnSubmitBookItem {
     position: relative;
-    border-color: var(--myVar-darkBlue);
+    border-color: var(--myVar-customForegroundColor);
 }
 
 #btnSubmitBookItem:hover {
-    background-color: var(--myVar-darkBlue);
+    background-color: var(--myVar-customForegroundColor);
     color: var(--myVar-creme);
 }
 

@@ -34,17 +34,12 @@
     border: 1px solid rgba(105, 105, 105, 0.34);
 }
 
-.tableOpeningHours tr:nth-child(2) {
-    font-weight: bold;
-}
-
 .contentGridContainer {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
     gap: 0;
-    width: 100%; /* keby som dal 100vw - tak mi da aj side-scroll bar, pretoze, horizontalna scroll bar mi zabera z viewPortu
-                    predkom je iba obal pre vsetky hlavne komponenty {navbar, content, footer} */
+    width: 100%;
     position: relative;
     top:0;
     left:0;
@@ -85,7 +80,7 @@
     margin-top: 1vw;
     margin-left: 3vw;
     margin-bottom: 2vw;
-    color: var(--myVar-darkBlue);
+    color: var(--myVar-customForegroundColor);
 }
 
 .cardsGrid {
@@ -116,10 +111,10 @@
 }
 
 .actalitiesCard .card-text {
-    color: var(--myVar-darkBlue);
+    color: var(--myVar-customForegroundColor);
 }
 .actalitiesCard .card-title {
-    color: var(--myVar-darkBlue);
+    color: var(--myVar-customForegroundColor);
 }
 
 .actalitiesCard:hover .card-title {
@@ -140,7 +135,7 @@ ul.pagination a.page-link {
 }
 
 ul.pagination a.page-link:hover {
-    color: var(--myVar-darkBlue);
+    color: var(--myVar-customForegroundColor);
     font-weight: bold;
 }
 

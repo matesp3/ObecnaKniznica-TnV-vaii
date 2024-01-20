@@ -1,3 +1,7 @@
+// import {LoginApi} from "./ajaxHelpers/LoginApi.js";
+
+import {LoginApi} from "./ajaxHelpers/LoginApi.js";
+
 const unicodeSlovakLetters = "\u{C1}\u{C4}\u{C9}\u{CD}\u{D3}\u{D4}\u{DA}\u{DD}\u{E1}\u{E4}\u{E9}\u{ED}\u{F3}\u{F4}\u{FA}\u{FD}\u{10C}\u{10D}\u{10E}\u{10F}\u{139}\u{13A}\u{13D}\u{13E}\u{147}\u{148}\u{154}\u{155}\u{160}\u{161}\u{164}\u{165}\u{17D}\u{17E}";
 
 window.onload = (event) => {
@@ -190,5 +194,15 @@ window.onload = (event) => {
     if (addAuthorBtn != null)
         addAuthorBtn.onclick = () => { addAuthorInputs(); };
 
-    document.getElementById('bookPictureInput').onchange = () => { checkFileSize(); };
+
+    const tableHours = document.getElementById('tableHours');
+    let dayPosition = new Date().getDay();
+    if (tableHours != null && dayPosition !== 0) {
+        let tbody = tableHours.childNodes.item(1).childNodes;
+        let td = tbody.item(2 * (dayPosition - 1)).style.fontWeight = 'bold'; //2,4,6
+    }
+
+    const button = document.getElementById('submitLogin');
+    // document.myAuth = new LoginApi("loginAPI");
+    const authorization = new LoginApi(button);
 }
