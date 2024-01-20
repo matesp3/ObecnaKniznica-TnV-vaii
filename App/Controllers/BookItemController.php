@@ -253,7 +253,6 @@ class BookItemController extends AControllerBase
                 $relationship->setAuthorId($oneAuthor->getId());
                 $relationship->setBookItemId($authors['bookId']);
                 $relationship->save();
-                // TODO: cez AJAX odstranit tych, ktorych vymazem vo formulari(alebo cez js do GET ich pridat)
                 // TODO: add category column for bookitem
             }
             ++$position;

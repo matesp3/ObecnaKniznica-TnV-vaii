@@ -17,7 +17,7 @@ class Author extends Model
     {
         if (strlen($name) == 0 || strlen($surname) == 0)
             throw new InvalidArgumentException("Name or surname is empty!", 500);
-        $fetchResult = Self::getAll('`name` LIKE ? AND `surname` LIKE ?', [$name, $surname]);
+        $fetchResult = self::getAll('`name` LIKE ? AND `surname` LIKE ?', [$name, $surname]);
 
         return (count($fetchResult) > 0) ? $fetchResult[0] : null;
     }
