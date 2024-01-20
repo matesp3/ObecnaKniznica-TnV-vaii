@@ -15,6 +15,20 @@ class AuthorRight extends Model
         return $this->id;
     }
 
+    public static function getAuthorRight(string $authorId, string $bookId) : array
+    {
+        return self::getAll('`authorId` = ? AND `bookItemId` = ?', [$authorId, $bookId]);
+    }
+    public static function getAllAuthorRightsWithBookId(int $bookId) : array
+    {
+        return self::getAll('`bookItemId` = ?', [$bookId]);
+    }
+
+    public static function deleteAuthorRight(string $authorId, string $bookId) : void
+    {
+        self::getAuthorRight($authorId, $bookId)?->delete();
+    }
+
     public function getAuthorId(): int
     {
         return $this->authorId;
@@ -34,6 +48,5 @@ class AuthorRight extends Model
     {
         $this->bookItemId = $bookItemId;
     }
-
 
 }

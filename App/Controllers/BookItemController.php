@@ -12,8 +12,6 @@ use App\Models\BookItem;
 use App\Helpers\FileStorage;
 use App\Core\HTTPException;
 use App\Models\BookItemAuthor;
-use MongoDB\BSON\PackedArray;
-use MongoDB\BSON\Timestamp;
 
 
 class BookItemController extends AControllerBase
@@ -30,9 +28,6 @@ class BookItemController extends AControllerBase
 
     public function save() : Response
     {
-//        $a = new Author();
-//        $strClass = $a->getMyClass();
-//        $a = 5 + 4;
         $id          = (int) $this->request()->getValue('id');
         $params      = [];
         $errors      = [];
@@ -59,7 +54,7 @@ class BookItemController extends AControllerBase
         if (is_null($wanted))
             throw new HTTPException(500, 'Databáze sa nepodarilo uložiť(nájsť) nový bookItem.');
 
-        $params['id'] = $wanted;
+        $params['bookId'] = $wanted;
         $this->saveAuthorsWithRelationships($params);
 
         return $this->redirect($this->url("catalogue.index"), ['message' => 'Zmeny uložené']);
@@ -73,6 +68,11 @@ class BookItemController extends AControllerBase
         if (is_null($bookItem)) {
             throw new HTTPException(404, "Zadaný knižný prvok nie je možné odstrániť, lebo neexistuje!");
         }
+
+        $relationships = AuthorRight::getAll('`bookItemId` = ?', [$bookItem->getId()]);
+        foreach ($relationships as $row)
+            $row->delete();
+
         if (!is_null($bookItem->getPictureName()))
             FileStorage::deleteFile($bookItem->getPictureName());
 
@@ -89,11 +89,20 @@ class BookItemController extends AControllerBase
             throw new HTTPException(404, "Nenašiel sa hľadaný knižný prvok na vykonanie úprav!");
         }
 
-        $i = 0;
-        $authors['surname-1'] = 'Stefanova';
-        $authors['surname-2'] = 'Poljak';
-        $authors['name-1'] = 'Anna';
-        $authors['name-2'] = 'Matej';
+        $authors = [];
+        $i = 1;
+        $rights = AuthorRight::getAll('`bookItemId` = ?', [$bookItem->getId()]);
+        foreach ($rights as $right) {
+            $oneAuthor = Author::getOne($right->getAuthorId());
+            if (!$oneAuthor)
+                throw new HTTPException(500, "CHYBA: Autorské právo existuje, ale jeho vlastník sa nenašiel!");
+            $authors['name-' . $i] = $oneAuthor->getName();
+            $authors['surname-' . $i] = $oneAuthor->getSurname();
+            ++$i;
+        }
+
+        if (count($authors) == 0)
+            throw new HTTPException(500, "CHYBA: Ku knihe sa nenašiel ani jeden autor!");
 
         return $this->html([
                 'bookItem' => $bookItem,
@@ -102,13 +111,13 @@ class BookItemController extends AControllerBase
         );
     }
 
-    /**
+    /** Tries to find author. If author doesn't exist, it creates one.
      * @param string $name
      * @param string $surname
-     * @return Author|null if new author is saved, it's going to be returned. If author did exist, null is returned.
+     * @return Author ref on wanted author
      * @throws \Exception
      */
-    private function saveAuthorIfNeeded(string $name, string $surname) : ?Author
+    private function saveAuthorIfNeeded(string $name, string $surname) : Author
     {
         $author = Author::getAuthor($name, $surname);
         if (is_null($author)) {      // create new author
@@ -117,9 +126,8 @@ class BookItemController extends AControllerBase
             $author->setSurname($surname);
             $author->setCreated(date('Y-m-d H:i:s'));
             $author->save();
-            return $author;
         }
-        return null;                 // an author already exists
+        return $author;                 // an author already exists
     }
 
     /** NOTE! It is expected, that file name from HTTP POST request is valid.
@@ -223,18 +231,28 @@ class BookItemController extends AControllerBase
         if (is_null($authors))
             throw new HTTPException(500, 'Žiadne dostupné info o autoroch aktuálneho knižného prvku!');
 
+        $previousRights = AuthorRight::getAllAuthorRightsWithBookId($authors['bookId']); // which remain after adding, will be deleted
+        $originCountOfPrevious = count($previousRights); // helpful variable to remember the the highest index to check in loops
         $position = 1;
         $aName    = $authors["name-"    . $position];
         $aSurname = $authors["surname-" . $position];
         while (!is_null($aName)) {
-            $newAuthor = $this->saveAuthorIfNeeded($aName, $aSurname);
-            if (!is_null($newAuthor)) // the non-null response tells us to create new relationship between book item and author
+            $oneAuthor = $this->saveAuthorIfNeeded($aName, $aSurname);
+            $relationships = AuthorRight::getAuthorRight($oneAuthor->getId(), $authors['bookId']);
+            if (count($relationships) > 0) // already exists
+            {
+                for ($i = 0; $i < (count($previousRights) > 0 ? $originCountOfPrevious : 0); $i++) {
+                    $oldOne =  $previousRights[$i] ?? null;
+                    if ($oldOne?->getId() == $relationships[0]->getId())
+                        unset($previousRights[$i]);
+                }
+            }
+            else              // doesn't exist
             {
                 $relationship = new AuthorRight();
-                $relationship->setAuthorId($newAuthor->getId());
-                $relationship->setBookItemId($authors['id']);
+                $relationship->setAuthorId($oneAuthor->getId());
+                $relationship->setBookItemId($authors['bookId']);
                 $relationship->save();
-                // TODO: link new author with bookitem
                 // TODO: cez AJAX odstranit tych, ktorych vymazem vo formulari(alebo cez js do GET ich pridat)
                 // TODO: add category column for bookitem
             }
@@ -242,6 +260,8 @@ class BookItemController extends AControllerBase
             $aName    = $authors["name-"    . $position] ?? null;
             $aSurname = $authors["surname-" . $position] ?? null;
         }
+        foreach ($previousRights as $right)
+            $right->delete();     // those, which are no longer used, because they weren't present in saving edit mode
     }
 
     /** Checks, whether first letter is from Slovak alphabet (optionally, if it's a number)
