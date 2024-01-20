@@ -56,4 +56,5 @@ class Author extends Model
     {
         $this->created = $created;
     }
+
 }

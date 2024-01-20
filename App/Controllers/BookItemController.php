@@ -7,9 +7,11 @@ use App\Core\AControllerBase;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Models\Author;
+use App\Models\AuthorRight;
 use App\Models\BookItem;
 use App\Helpers\FileStorage;
 use App\Core\HTTPException;
+use App\Models\BookItemAuthor;
 use MongoDB\BSON\PackedArray;
 use MongoDB\BSON\Timestamp;
 
@@ -28,6 +30,9 @@ class BookItemController extends AControllerBase
 
     public function save() : Response
     {
+//        $a = new Author();
+//        $strClass = $a->getMyClass();
+//        $a = 5 + 4;
         $id          = (int) $this->request()->getValue('id');
         $params      = [];
         $errors      = [];
@@ -54,7 +59,8 @@ class BookItemController extends AControllerBase
         if (is_null($wanted))
             throw new HTTPException(500, 'Databáze sa nepodarilo uložiť(nájsť) nový bookItem.');
 
-        //$this->saveAuthorsWithRelationships($params['authors']);
+        $params['id'] = $wanted;
+        $this->saveAuthorsWithRelationships($params);
 
         return $this->redirect($this->url("catalogue.index"), ['message' => 'Zmeny uložené']);
     }
@@ -224,13 +230,17 @@ class BookItemController extends AControllerBase
             $newAuthor = $this->saveAuthorIfNeeded($aName, $aSurname);
             if (!is_null($newAuthor)) // the non-null response tells us to create new relationship between book item and author
             {
+                $relationship = new AuthorRight();
+                $relationship->setAuthorId($newAuthor->getId());
+                $relationship->setBookItemId($authors['id']);
+                $relationship->save();
                 // TODO: link new author with bookitem
-                // TODO: you need to delete from DB all the users with current post, who were delete through delete button
+                // TODO: cez AJAX odstranit tych, ktorych vymazem vo formulari(alebo cez js do GET ich pridat)
                 // TODO: add category column for bookitem
             }
             ++$position;
-            $aName    = $authors["name-"    . $position];
-            $aSurname = $authors["surname-" . $position];
+            $aName    = $authors["name-"    . $position] ?? null;
+            $aSurname = $authors["surname-" . $position] ?? null;
         }
     }
 

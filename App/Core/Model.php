@@ -16,7 +16,7 @@ use PDOException;
 abstract class Model implements \JsonSerializable
 {
     private static ?Connection $connection = null;
-    private static ?array $dbColumns = null;
+    private static ?array $dbColumns = null; // 'static' removed
     private mixed $_dbId = null;
 
     /**
@@ -80,7 +80,8 @@ abstract class Model implements \JsonSerializable
      */
     public static function getTableName(): string
     {
-        $arr = explode("\\", get_called_class());
+        $className = get_called_class();
+        $arr = explode("\\", $className);
         return Inflect::pluralize(strtolower(end($arr)));
     }
 
@@ -173,11 +174,11 @@ abstract class Model implements \JsonSerializable
      * @return array
      * @throws \Exception
      */
-    public static function getDbColumns(): array
+    public function getDbColumns(): array
     {
-        if (self::$dbColumns != null) {
-            return self::$dbColumns;
-        }
+//        if (self::$dbColumns != null) {
+//            return self::$dbColumns;
+//        }
         self::connect();
         try {
             $sql = "DESCRIBE " . static::getTableName();

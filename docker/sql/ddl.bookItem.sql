@@ -38,13 +38,13 @@ CREATE TABLE `authors` (
     `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `bookitem_authors`;
-CREATE TABLE `bookitem_authors` (
+DROP TABLE IF EXISTS `authorrights`;
+CREATE TABLE `authorrights` (
     `id` integer  PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `author_id`   integer NOT NULL,
-    `bookitem_id` integer NOT NULL
+    `authorId`   integer NOT NULL,
+    `bookItemId` integer NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-ALTER TABLE `bookitem_authors` ADD FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`);
+ALTER TABLE `authorrights` ADD FOREIGN KEY (`authorId`) REFERENCES `authors` (`id`);
 
-ALTER TABLE `bookitem_authors` ADD FOREIGN KEY (`bookitem_id`) REFERENCES `bookitems` (`id`);
+ALTER TABLE `authorrights` ADD FOREIGN KEY (`bookItemId`) REFERENCES `bookitems` (`id`);
