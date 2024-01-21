@@ -2,6 +2,7 @@
 /** @var \App\Core\LinkGenerator  $link      */
 /** @var \App\Models\BookItem     $bookItem  */
 /** @var array                    $authors   */
+/** @var \App\Core\IAuthenticator $auth   */
 ?>
 
 <div class="card">
@@ -37,18 +38,24 @@
     </div>
     <div class="row g-0 card-footer reservingArea">
         <div class="col-md-6 d-flex justify-content-md-start editSection">
+            <?php if ($auth->isLogged() && ($auth->getLoggedUserContext()->getRole() == 'admin')) : ?>
             <a class="btn btn-danger" href="<?= $link->url('bookItem.delete',['id' => $bookItem->getId()]) ?>">
                 <i class="bi bi-trash"></i> vymazať
             </a>
             <a class="btn btn-warning" href="<?= $link->url('bookItem.edit',['id' => $bookItem->getId()]) ?>">
                 <i class="bi bi-pencil"></i> upraviť
             </a>
+            <?php endif ?>
         </div>
         <div class="col-md-6 d-md-flex justify-content-md-end">
             <div class="statusCoverClass">
-                <p class="statusAvailability"><?= $bookItem->getAvailable() != null && $bookItem->getAvailable() > 0 ? "Dostupné" : "Nedostupné" ?></p>
+<!--                <p class="statusAvailability">--><?php //= $bookItem->getAvailable() != null && $bookItem->getAvailable() > 0 ? "Dostupné" : "Nedostupné" ?><!--</p>-->
+                <p class="statusAvailability">Dostupných:<?= $bookItem->getAvailable()?> </p>
             </div>
-            <button class="btn btn-primary btnReserve" type="button">Rezervovať</button>
+            <button class="btn btnReserve" type="button">
+                <input type="hidden" name="id" value=<?=$bookItem->getId()?> >
+                Rezervovať
+            </button>
         </div>
     </div>
 </div>

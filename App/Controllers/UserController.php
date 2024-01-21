@@ -59,6 +59,25 @@ class UserController extends AControllerBase
             $result['surname'] = $this->validateInput(Configuration::SLOVAK_PATTERN_MIN, Configuration::SLOVAK_PATTERN_MAX,
                 Configuration::SLOVAK_PATTERN_SHORT, $jsonData->surname, true);
 
+            $allOk = true;
+            foreach ($result as $input)
+            {
+                if (!$input)
+                    $allOk = false;
+            }
+            $name = $jsonData->login;
+
+            if ($allOk)
+            {
+                $newUser = new User();
+                $newUser->setUsername($jsonData->login);
+                $newUser->setRealName($jsonData->name);
+                $newUser->setRealSurname($jsonData->surname);
+                $newUser->setCreated(date('Y-m-d h:i:s'));
+                $newUser->setPasswordHash(password_hash($jsonData->password, PASSWORD_DEFAULT));
+                $newUser->save();
+            }
+
             return $this->json($result);
         }
         return $this->json(['response' => false]);

@@ -69,7 +69,7 @@ class MyAuthenticator implements IAuthenticator
      */
     public function getLoggedUserId(): mixed
     {
-        return $_SESSION['user'];
+        return $this->getLoggedUserContext()?->getId();
     }
 
     /**
@@ -78,6 +78,6 @@ class MyAuthenticator implements IAuthenticator
      */
     public function getLoggedUserContext(): mixed
     {
-        return User::getUser($this->getLoggedUserId());
+        return User::getUserByLogin($_SESSION['user']);
     }
 }

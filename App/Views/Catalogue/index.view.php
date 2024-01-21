@@ -17,14 +17,12 @@
                 <button type="button" class="btnsSubmitSearching">Hľadať</button>
             </div>
         </div>
-        <div class="containerOfBooks container">
+        <div id="containerOfBooks" class="container">
             <?php foreach ($data as $complexItem) : ?>
                 <?php $bookItem = $complexItem['book'] ?>
                 <?php $authors = $complexItem['authors'] ?>
                 <?php require 'card.view.php'?>
             <?php endforeach; ?>
-
-
         </div>
     </div>
 

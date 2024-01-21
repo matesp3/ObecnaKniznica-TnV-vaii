@@ -52,19 +52,30 @@ ALTER TABLE `authorrights` ADD FOREIGN KEY (`authorId`) REFERENCES `authors` (`i
 ALTER TABLE `authorrights` ADD FOREIGN KEY (`bookItemId`) REFERENCES `bookitems` (`id`);
 
 
-DROP TABLE IF EXISTS `articles`;
-CREATE TABLE `articles` (
+DROP TABLE IF EXISTS `reservations`;
+CREATE TABLE `reservations` (
     `id`          integer             PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `authorId`    integer             NOT NULL,
-    `title`       varchar(90)         NOT NULL,
-    `lastEdit`    datetime            NOT NULL,
-    `content`     text                NOT NULL,
-    `pictureName` varchar(80)         DEFAULT NULL,
-    `edited`      integer             DEFAULT NULL,
+    `bookItemId`  integer             NOT NULL,
+    `customerId`  integer             NULL,
+    `borrowed`    datetime            NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-ALTER TABLE `articles` ADD FOREIGN KEY (`authorId`) REFERENCES `users` (`id`);
-ALTER TABLE `articles` ADD FOREIGN KEY (`edited`) REFERENCES `users` (`id`);
+ALTER TABLE `reservations` ADD FOREIGN KEY (`bookItemId`) REFERENCES `bookitems` (`id`);
+ALTER TABLE `reservations` ADD FOREIGN KEY (`customerId`) REFERENCES `users` (`id`);
+
+-- DROP TABLE IF EXISTS `articles`;
+-- CREATE TABLE `articles` (
+--     `id`          integer             PRIMARY KEY NOT NULL AUTO_INCREMENT,
+--     `authorId`    integer             NOT NULL,
+--     `title`       varchar(90)         NOT NULL,
+--     `lastEdit`    datetime            NOT NULL,
+--     `content`     text                NOT NULL,
+--     `pictureName` varchar(80)         DEFAULT NULL,
+--     `edited`      integer             DEFAULT NULL,
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- ALTER TABLE `articles` ADD FOREIGN KEY (`authorId`) REFERENCES `users` (`id`);
+-- ALTER TABLE `articles` ADD FOREIGN KEY (`edited`) REFERENCES `users` (`id`);
 
 -- DROP TABLE IF EXISTS `articleitems`;
 -- CREATE TABLE `articles` (

@@ -1,6 +1,7 @@
 <?php
 /** @var array $authors */
-/** @var array $data */
+/** @var array $data                   */
+/** @var App\Core\IAuthenticator $auth */
 ?>
 
 <?php $i = 1; ?>

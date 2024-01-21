@@ -4,17 +4,6 @@
 const unicodeSlovakLetters = "\u{C1}\u{C4}\u{C9}\u{CD}\u{D3}\u{D4}\u{DA}\u{DD}\u{E1}\u{E4}\u{E9}\u{ED}\u{F3}\u{F4}\u{FA}\u{FD}\u{10C}\u{10D}\u{10E}\u{10F}\u{139}\u{13A}\u{13D}\u{13E}\u{147}\u{148}\u{154}\u{155}\u{160}\u{161}\u{164}\u{165}\u{17D}\u{17E}";
 
 window.onload = (event) => {
-    // function higlightLabel(event) {
-    //     const authorLabel = document.getElementById("aboutAuthorInputs1").previousElementSibling;
-    //     if (authorLabel != null) {
-    //         authorLabel.style.color = "white";
-    //         authorLabel.style.fontWeight = "bold";
-    //         authorLabel.style.backgroundColor = "red";
-    //         authorLabel.styles.border = "solid";
-    //         authorLabel.styles.borderRadius = "10px";
-    //     }
-    // }
-
     async function sendRequest(controller, action, method, responseCode, body, onErrorReturn = null) {
         // Use exceptions to wrap the fetch call
         let baseUrl = "http://localhost?c=" + controller + "&a=" + action;
@@ -124,6 +113,37 @@ window.onload = (event) => {
                 div.firstChild.style.color = 'var(--myVar-valid)';
                 window.location.href = "http://localhost/?c=catalogue&a=index";
                 // location.replace("http://localhost/?c=home&a=index");
+            }
+        }
+    }
+
+    async function reserveBook(event){
+        const button =  event.target;
+        const availabilityElement = button.parentElement.firstChild.firstChild;
+
+            let data = await sendRequest(
+            '',
+            'checkUserInputs',
+            'POST',
+            204,
+            {
+                bookItemId: button.firstChild.value,
+            },
+            false);
+
+        const div = document.getElementById('registrationWrapper');
+        if (typeof data === "boolean" && data === false) {
+            div.innerHTML = `<div class="invalid-feedback"> Pri rezervácii došlo k chybe!</div><br>` + div.innerHTML;
+            return;
+        }
+        if (typeof data == "boolean" && data === true) {  // response 204
+            let countOfAvail = getPosition(':',availabilityElement.innerText);
+            if (typeof countOfAvail != "undefined") {
+                const newNum = parseInt(countOfAvail) - 1;
+                if (newNum >= 0) {
+                    availabilityElement.innerText = 'Dostupných:' + newNum;
+                }
+
             }
         }
     }
@@ -318,6 +338,17 @@ window.onload = (event) => {
         deleteBtn.appendChild(iTrash);
     }
 
+    // function higlightLabel(event) {
+    //     const authorLabel = document.getElementById("aboutAuthorInputs1").previousElementSibling;
+    //     if (authorLabel != null) {
+    //         authorLabel.style.color = "white";
+    //         authorLabel.style.fontWeight = "bold";
+    //         authorLabel.style.backgroundColor = "red";
+    //         authorLabel.styles.border = "solid";
+    //         authorLabel.styles.borderRadius = "10px";
+    //     }
+    // }
+
     //--------------- end of function definitions -----------------//
 
     // ------- initialization of page ------------- //
@@ -369,16 +400,16 @@ window.onload = (event) => {
         });
     }
 
+    const bookContainer = document.getElementById('containerOfBooks');
+    if (bookContainer != null) {
+        const reserveButtons = document.getElementsByClassName('btnReserve');
+        for (let i = 0; i < reserveButtons.length; i++) {
+            reserveButtons[i].addEventListener("onclick", async (event) => {
+                event.preventDefault();
+                await reserveBook(event);
+                return false;
+            });
+        }
+    }
 
-    // const btn = document.getElementById('btn-submit-login');
-    // if (btn != null)
-    // {
-    //     btn.onclick =  async (event) => {
-    //         await tryLogin(event);
-    //         return false;
-    //     };
-    // }
-
-    // document.myAuth = new LoginApi("loginAPI");
-    // const authorization = new LoginApi(button);
 }
