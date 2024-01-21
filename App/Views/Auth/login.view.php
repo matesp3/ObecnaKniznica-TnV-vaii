@@ -23,7 +23,7 @@ $layout = 'root';
                 <div class="form-text">
                     <a class="withLink" href="<?= $link->url("user.registration") ?>"> Nemáte účet? Vytvoriť nový </a>
                 </div>
-                <button id='submitLogin' type="submit" class="submitLoginButton">Prihlásiť sa</button>
+                <button id='btn-submit-login' type="submit">Prihlásiť sa</button>
             </form>
         </div>
     </div>

@@ -5,7 +5,7 @@
     padding: 15px;
 }
 
-.submitLoginButton {
+#btn-submit-login {
     background-color: var(--myVar-customForegroundColor);
     transform: translateY(10px);
     color: var(--myVar-creme);

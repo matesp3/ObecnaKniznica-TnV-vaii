@@ -87,6 +87,78 @@ window.onload = (event) => {
         // }
     }
 
+    async function validateRegistration(event){
+        let nameInput = document.getElementById('reg-name').value;
+        let surnameInput = document.getElementById('reg-surname').value;
+        let loginInput = document.getElementById('reg-login').value;
+        let passwordInput = document.getElementById('reg-password').value;
+        let passwordInput2 = document.getElementById('reg-password2').value;
+
+        let data = await sendRequest(
+            'user',
+            'checkUserInputs',
+            'POST',
+            200,
+            {
+                login:        loginInput,
+                password:     passwordInput,
+                password2:    passwordInput2,
+                name:         nameInput,
+                surname:      surnameInput
+            },
+            false);
+
+        const div = document.getElementById('registrationWrapper');
+        if (typeof data === "undefined" || (typeof data === "boolean" && data === false)) {
+            div.innerHTML = `<div class="invalid-feedback"> Pri prihlasovaní došlo k chybe!</div><br>` + div.innerHTML;
+        }
+        if (typeof data === "object" && data != null) {  // response 200
+            if (data.response != null && data.response === false) {
+                div.innerHTML = `<div class="invalid-feedback"> Pri prihlasovaní došlo k chybe!</div><br>` + div.innerHTML;
+                return;
+            }
+            let allOk = proccessServerRegistrationResponse(data);
+
+            if (allOk) {
+                div.innerHTML = `<span><i><small> Registrácia prebehle úspešne! </small></i></span>`;
+                div.firstChild.style.color = 'var(--myVar-valid)';
+                window.location.href = "http://localhost/?c=catalogue&a=index";
+                // location.replace("http://localhost/?c=home&a=index");
+            }
+        }
+    }
+
+    function proccessServerRegistrationResponse(jsonBody) {
+        // `<div class="${data.name ? '' : 'in'}valid-feedback"> </div>`
+        let allOk = true;
+        if (!jsonBody.name) {
+            const nameParent = document.getElementById('reg-name').parentElement;
+            nameParent.innerHTML = nameParent.innerHTML + `<div class="invalid-feedback"> Meno v nesprávnom formáte!</div>`
+            allOk = false;
+        }
+        if (!jsonBody.surname) {
+            const nameParent = document.getElementById('reg-surname').parentElement;
+            nameParent.innerHTML = nameParent.innerHTML + `<div class="invalid-feedback"> Priezvisko v nesprávnom formáte!</div>`
+            allOk = false;
+        }
+        if (!jsonBody.login) {
+            const nameParent = document.getElementById('reg-login').parentElement;
+            nameParent.innerHTML = nameParent.innerHTML + `<div class="invalid-feedback"> Nesprávny alebo existujúci login!</div>`
+            allOk = false;
+        }
+        if (!jsonBody.password) {
+            const nameParent = document.getElementById('reg-password').parentElement;
+            nameParent.innerHTML = nameParent.innerHTML + `<div class="invalid-feedback"> Heslo v nesprávnom formáte!</div>`
+            allOk = false;
+        }
+        if (!jsonBody.password2) {
+            const nameParent = document.getElementById('reg-password2').parentElement;
+            nameParent.innerHTML = nameParent.innerHTML + `<div class="invalid-feedback"> Heslá sa nezhodujú!</div>`
+            allOk = false;
+        }
+        return allOk;
+    }
+
     function checkFileSize() {
         const fileInput = document.getElementById('bookPictureInput');
         if (fileInput != null) {
@@ -277,17 +349,28 @@ window.onload = (event) => {
         fileInput.onchange = () => { checkFileSize(); };
     }
 
-    const form = document.getElementById('formLogin');
-    if (form != null)
-    {
+    // const formLogin = document.getElementById('formLogin');
+    // if (formLogin != null)
+    // {
+    //     formLogin.addEventListener("submit",  async (event) => {
+    //         event.preventDefault();
+    //         await tryLogin(event);
+    //         return false;
+    //     });
+    // }
 
-        form.addEventListener("submit",  async (event) => {
+    const formRegistration = document.getElementById('formRegistration');
+    if (formRegistration != null)
+    {
+        formRegistration.addEventListener("submit",  async (event) => {
             event.preventDefault();
-            await tryLogin(event);
+            await validateRegistration(event);
             return false;
         });
     }
-    // const btn = document.getElementById('submitLogin');
+
+
+    // const btn = document.getElementById('btn-submit-login');
     // if (btn != null)
     // {
     //     btn.onclick =  async (event) => {

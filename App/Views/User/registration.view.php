@@ -4,8 +4,8 @@ $layout = 'root';
 /** @var \App\Core\LinkGenerator $link */
 ?>
 
-<div class="row justify-content-center">
-    <form class="needs-validation col-lg-9" method="post" action="<?= $link->url('bookItem.save') ?>"
+<div id="registrationWrapper" class="row justify-content-center">
+    <form id="formRegistration" class="needs-validation col-lg-9" method="post" action="<?= $link->url('admin.index') ?>"
           enctype="multipart/form-data">
         <div class="container py-3 px-5 my-5 rounded-3 formHoverEffect">
             <h3 class="text-center mb-5"> Registrácia </h3>
@@ -55,7 +55,7 @@ $layout = 'root';
             </div>
 
             <div class="row justify-content-center align-items-center">
-                <button id="btnSubmitBookItem" type="submit"
+                <button id="btn-submit-registration" type="submit"
                         class="btn border-2 text-center col-6 col-sm-4 col-md-2 col-lg-2 mt-5">
                     Registrovať
                 </button>

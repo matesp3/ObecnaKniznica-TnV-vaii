@@ -53,25 +53,28 @@ class UserController extends AControllerBase
 
             /* name */
             $result['name'] = $this->validateInput(Configuration::SLOVAK_PATTERN_MIN, Configuration::SLOVAK_PATTERN_MAX,
-                Configuration::SLOVAK_PATTERN_SHORT, $jsonData->name);
+                Configuration::SLOVAK_PATTERN_SHORT, $jsonData->name, true);
 
             /* surname */
             $result['surname'] = $this->validateInput(Configuration::SLOVAK_PATTERN_MIN, Configuration::SLOVAK_PATTERN_MAX,
-                Configuration::SLOVAK_PATTERN_SHORT, $jsonData->surname);
+                Configuration::SLOVAK_PATTERN_SHORT, $jsonData->surname, true);
 
-            $this->json($result);
+            return $this->json($result);
         }
         return $this->json(['response' => false]);
     }
 
-    private function validateInput(int $min, int $max, string $pattern, $suspectedValue) : bool
+    private function validateInput(int $min, int $max, string $pattern, $suspectedValue, bool $utf8 = false) : bool
     {
         $strLength = strlen($suspectedValue);
         if ($strLength < $min || $strLength > $max)
             return false;
         else
         {
-            $match = preg_match($pattern . '{' . $strLength . '}', $suspectedValue);
+            $wholePattern = '/' . $pattern . "{" . $strLength . '}/';
+            if ($utf8)
+                $wholePattern = $wholePattern . 'u';
+            $match = preg_match($wholePattern, $suspectedValue);
             return (($match !== false) && $match === 1);;
         }
     }
