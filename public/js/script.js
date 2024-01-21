@@ -1,3 +1,6 @@
+
+// import {LoginApi} from "./ajaxHelpers/LoginApi.js";
+
 const unicodeSlovakLetters = "\u{C1}\u{C4}\u{C9}\u{CD}\u{D3}\u{D4}\u{DA}\u{DD}\u{E1}\u{E4}\u{E9}\u{ED}\u{F3}\u{F4}\u{FA}\u{FD}\u{10C}\u{10D}\u{10E}\u{10F}\u{139}\u{13A}\u{13D}\u{13E}\u{147}\u{148}\u{154}\u{155}\u{160}\u{161}\u{164}\u{165}\u{17D}\u{17E}";
 
 window.onload = (event) => {
@@ -12,6 +15,52 @@ window.onload = (event) => {
     //     }
     // }
 
+    async function sendRequest(controller, action, method, responseCode, body, onErrorReturn = null) {
+        // Use exceptions to wrap the fetch call
+        let baseUrl = "http://localhost?c=" + controller + "&a=" + action;
+        try {
+            // Bild up fetch and wait for response
+            let response = await fetch(
+                baseUrl,
+                {
+                    method: method,
+                    body: JSON.stringify(body),
+                    headers: { // Set headers for JSON communication
+                        "Content-type": "application/json", // Send JSON
+                        "Accept" : "application/json", // Accept only JSON as response
+                    }
+                });
+            // If return code do not match our expected value throw error
+            if (response.status !== responseCode )
+                return onErrorReturn;
+            // ak ocakavam json (chcem 200) -> 204 mi vrati pri tejto implementacii chybu
+            // ak ocakavam empty (chcem 204) -> pri 200 (vrateni JSONU) mi vrati chybu pri takejto implementacii
+
+            if (response.status === 204)
+                return true;                   // nic neocakavam (204)
+            else
+                return await response.json();  // ocakavam json (200)
+        } catch(ex) {
+            // On any error just return error
+            return onErrorReturn;
+        }
+    }
+
+    async function tryLogin(event){
+        let loginInput = document.getElementById('login').value;
+        let passwordInput = document.getElementById('password').value;
+
+        return await sendRequest(
+            'login',
+            'login',
+            'POST',
+            204,
+            {
+                login: loginInput,
+                password: passwordInput
+            },
+            false);
+    }
 
     function checkFileSize() {
         const fileInput = document.getElementById('bookPictureInput');
@@ -190,5 +239,64 @@ window.onload = (event) => {
     if (addAuthorBtn != null)
         addAuthorBtn.onclick = () => { addAuthorInputs(); };
 
-    document.getElementById('bookPictureInput').onchange = () => { checkFileSize(); };
+
+    const tableHours = document.getElementById('tableHours');
+    let dayPosition = new Date().getDay();
+    if (tableHours != null && dayPosition !== 0) {
+        let tbody = tableHours.childNodes.item(1).childNodes;
+        let td = tbody.item(2 * (dayPosition - 1)).style.fontWeight = 'bold'; //2,4,6
+    }
+
+    // const form = document.getElementById('formLogin');
+    // if (form != null) {
+    //     form.onsubmit = (ev) => {
+    //         ev.preventDefault();
+    //     };
+    // }
+
+
+    const form = document.getElementById('formLogin');
+    if (form != null)
+    {
+        form.onsubmit =  async (event) => {
+            tryLogin()
+                .then((data) => {
+                    const div = document.getElementById('loginFormTitle');
+                    if (typeof data === "undefined") {
+                        div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Chyba! UNDEFINED returned" </small></i></span>`;
+                        throw new Error('Controller returned UNDEFINED value!');
+                    }
+                    if (typeof data === "boolean") {
+                        // div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"BOOLEAN->${data}" Ok? </small></i></span>`;
+                        if (data === false) {
+                            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>" Prihlásenie neúspešné! </small></i></span>`;
+                        }
+                        else {
+                            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>OK.. (204-emptyResponse)</small></i></span>`;
+                        }
+                    }
+
+                    if (typeof data === "object" && data != null) {
+                        div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>JSON data { ${data} }</small></i></span>`;
+                    }
+
+                    // if (data === false) {
+                    //     const div = document.getElementById('loginFormTitle');
+                    //     div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Nastala nečakaná chyba pri kontrole prihlasovacích údajov!" </small></i></span>`;
+                    //     event.preventDefault();
+                    // }
+                    // else if (data !== true){ // there's some json
+                    //     const div = document.getElementById(data.passed ? 'password' : 'login').parentElement;
+                    //     div.innerHTML = div.innerHTML + `<span className="invalid"><i><small> "Nesprávne zadané ${((data.passed) ? 'heslo': 'prihlasovacie meno')} !"</small></i></span>`;
+                    //     event.preventDefault();
+                    // }
+                })
+                .catch(() => {
+                    console.log('Doslo k chybe pri promises..');
+                });
+        };
+    }
+
+    // document.myAuth = new LoginApi("loginAPI");
+    // const authorization = new LoginApi(button);
 }

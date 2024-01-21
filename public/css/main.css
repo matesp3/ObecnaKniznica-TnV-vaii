@@ -28,5 +28,17 @@
     bottom: 0;
     height: var(--myVar-footerHeight);
     width: 100%;
-    background-color: var(--myVar-greenOfFooter);
+    color: var(--myVar-customForegroundColor);
+    background-color: var(--myVar-customBackgroundColor);
+}
+
+.withLink {
+    color: var(--myVar-customForegroundColor);
+    transform: translate(5px, -9px);
+}
+
+.withLink:hover {
+    color: var(--myVar-onHover);
+    text-decoration: underline;
+    cursor: pointer;
 }

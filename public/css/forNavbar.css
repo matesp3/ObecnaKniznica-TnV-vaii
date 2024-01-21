@@ -1,5 +1,5 @@
 #navHeader {
-    background-color: var(--myVar-greenHeader);
+    background-color: var(--myVar-customBackgroundColor);
     font-weight: bold;
     position: sticky;
     top:0;
@@ -8,48 +8,42 @@
 }
 
 .itemOfNavbar, .navbar-brand {
-    color: var(--myVar-darkBlue);
-    font-size: 5vw;
+    color: var(--myVar-customForegroundColor);
 }
 
 .itemOfNavbar:hover, .navbar-toggler:hover {
-    border-radius: 10px;
-    color: #1966be;
-    background-color: rgba(215, 248, 175, 0.29);
-}
-
-.dropdown-menu {
-    background-color: #fffff7;
-    border: 3px solid rgba(42, 210, 20, 0.36);
-}
-
-.dropdown-item {
-    color: #084886;
-    font-weight: normal;
+    border-radius: 8px;
+    color: var(--myVar-foregroundColorOnHover);
+    background-color: var(--myVar-backgroundColorOnHover);
 }
 
 .navbar-toggler {
-    color: var(--myVar-darkBlue);
+    color: var(--myVar-customForegroundColor);
 }
 
-@media screen and (min-width: 768px) {
-    .itemOfNavbar, .navbar-brand {
-        font-size: 2vw;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .itemOfNavbar, .navbar-brand {
-        font-size: 1.1vw;
-    }
-}
-
-@media screen and (max-width: 174px) {
+@media screen and (max-width: 274px) {
     span.homeButtonName {
         display: none;
     }
 
     i.homeButtonIcon {  /* ikonka je vytvorena ako font pismo */
-        font-size: 50vw;
+        font-size: 20vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    ul .show {
+        background-color: var(--myVar-invisible);
+        border-style: none;
+    }
+
+    .dropdown-item {
+        color: var(--myVar-customForegroundColor) ;
+    }
+
+    .dropdown-item:hover {
+        color: var(--myVar-foregroundColorOnHover);
+        background-color: var(--myVar-backgroundColorOnHover);
+        border-radius: 7px;
     }
 }

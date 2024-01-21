@@ -20,7 +20,7 @@ class AuthController extends AControllerBase
      */
     public function index(): Response
     {
-        return $this->redirect(Configuration::LOGIN_URL);
+        return $this->html();
     }
 
     /**
@@ -29,17 +29,18 @@ class AuthController extends AControllerBase
      */
     public function login(): Response
     {
-        $formData = $this->app->getRequest()->getPost();
-        $logged = null;
-        if (isset($formData['submit'])) {
-            $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
-            if ($logged) {
-                return $this->redirect($this->url("admin.index"));
-            }
-        }
-
-        $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
-        return $this->html($data);
+//        $formData = $this->app->getRequest()->getPost();
+//        $logged = null;
+//        if (isset($formData['submit'])) {
+//            $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
+//            if ($logged) {
+//                return $this->redirect($this->url("admin.index"));
+//            }
+//        }
+//
+//        $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
+//        return $this->html($data);
+        return $this->html();
     }
 
     /**
