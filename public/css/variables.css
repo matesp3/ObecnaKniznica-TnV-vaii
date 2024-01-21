@@ -13,6 +13,6 @@
     --myVar-alert: #866208FF;
     --myVar-valid: #2c9175;
     --myVar-invalid: #dc3545;
-    --myVar-footerHeight: 4rem;
     --myVar-invisible: rgba(42, 210, 20, 0.02);
+    --myVar-footerHeight: 4rem;
 }

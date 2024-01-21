@@ -50,7 +50,7 @@ window.onload = (event) => {
         let loginInput = document.getElementById('login').value;
         let passwordInput = document.getElementById('password').value;
 
-        return await sendRequest(
+        let data = await sendRequest(
             'login',
             'login',
             'POST',
@@ -60,6 +60,31 @@ window.onload = (event) => {
                 password: passwordInput
             },
             false);
+
+        const div = document.getElementById('formErrorMessages');
+        if (typeof data === "undefined") {
+            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Chyba! UNDEFINED returned" </small></i></span>`;
+            throw new Error('Controller returned UNDEFINED value!');
+        }
+        if (typeof data === "boolean") {
+            // div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"BOOLEAN->${data}" Ok? </small></i></span>`;
+            if (data === false) {
+                event.preventDefault();
+                document.getElementById('login').value = '';
+                document.getElementById('password').value = '';
+                div.innerHTML = `<span><i><small>Prihlásenie neúspešné! </small></i></span>`;
+                div.firstChild.style.color = 'var(--myVar-invalid)';
+            }
+            else {
+                window.location.href = "http://localhost/?c=home&a=index";
+                // location.replace("http://localhost/?c=home&a=index");
+                div.innerHTML = `<span><i><small>OK.. </small></i></span>`;
+                div.firstChild.style.color = 'var(--myVar-valid)';
+            }
+        }
+        // if (typeof data === "object" && data != null) {
+        //     div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>JSON data { ${data} }</small></i></span>`;
+        // }
     }
 
     function checkFileSize() {
@@ -71,7 +96,7 @@ window.onload = (event) => {
                 let fSize = fileInput.files.item(0).size / Math.pow(2,20); // 2^20 bytov - 1 MB
                 fSize = Math.round(fSize * 100) / 100;
                 infoElement.textContent = `Veľkosť nového obrázka: ${fSize} MB`
-                infoElement.style.color = "var(--myVar-darkBlue)";
+                infoElement.style.color = "var(--myVar-valid)";
             }
             else {
                 infoElement.textContent = "Obrázok nebol vybraný/zmenený."
@@ -247,55 +272,29 @@ window.onload = (event) => {
         let td = tbody.item(2 * (dayPosition - 1)).style.fontWeight = 'bold'; //2,4,6
     }
 
-    // const form = document.getElementById('formLogin');
-    // if (form != null) {
-    //     form.onsubmit = (ev) => {
-    //         ev.preventDefault();
-    //     };
-    // }
-
+    const fileInput = document.getElementById('bookPictureInput');
+    if (fileInput != null) {
+        fileInput.onchange = () => { checkFileSize(); };
+    }
 
     const form = document.getElementById('formLogin');
     if (form != null)
     {
-        form.onsubmit =  async (event) => {
-            tryLogin()
-                .then((data) => {
-                    const div = document.getElementById('loginFormTitle');
-                    if (typeof data === "undefined") {
-                        div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Chyba! UNDEFINED returned" </small></i></span>`;
-                        throw new Error('Controller returned UNDEFINED value!');
-                    }
-                    if (typeof data === "boolean") {
-                        // div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"BOOLEAN->${data}" Ok? </small></i></span>`;
-                        if (data === false) {
-                            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>" Prihlásenie neúspešné! </small></i></span>`;
-                        }
-                        else {
-                            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>OK.. (204-emptyResponse)</small></i></span>`;
-                        }
-                    }
 
-                    if (typeof data === "object" && data != null) {
-                        div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>JSON data { ${data} }</small></i></span>`;
-                    }
-
-                    // if (data === false) {
-                    //     const div = document.getElementById('loginFormTitle');
-                    //     div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Nastala nečakaná chyba pri kontrole prihlasovacích údajov!" </small></i></span>`;
-                    //     event.preventDefault();
-                    // }
-                    // else if (data !== true){ // there's some json
-                    //     const div = document.getElementById(data.passed ? 'password' : 'login').parentElement;
-                    //     div.innerHTML = div.innerHTML + `<span className="invalid"><i><small> "Nesprávne zadané ${((data.passed) ? 'heslo': 'prihlasovacie meno')} !"</small></i></span>`;
-                    //     event.preventDefault();
-                    // }
-                })
-                .catch(() => {
-                    console.log('Doslo k chybe pri promises..');
-                });
-        };
+        form.addEventListener("submit",  async (event) => {
+            event.preventDefault();
+            await tryLogin(event);
+            return false;
+        });
     }
+    // const btn = document.getElementById('submitLogin');
+    // if (btn != null)
+    // {
+    //     btn.onclick =  async (event) => {
+    //         await tryLogin(event);
+    //         return false;
+    //     };
+    // }
 
     // document.myAuth = new LoginApi("loginAPI");
     // const authorization = new LoginApi(button);

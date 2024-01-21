@@ -30,7 +30,7 @@ class MyAuthenticator implements IAuthenticator
 //        if (password_verify($password, $retrieved->getPasswordHash()))
         if (strcmp($password, $retrieved->getPasswordHash()) == 0)
         {
-//            $_SESSION['user'] = $login;
+            $_SESSION['user'] = $login;
             return true;
         }
         return false;

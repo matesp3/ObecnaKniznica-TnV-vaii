@@ -27,8 +27,8 @@ class LoginController extends AControllerBase
             {
                 return new EmptyResponse();
             }
-            return $this->json(['passed' => 'ahoj']);
         }
-        throw new HTTPException(401);
+//        throw new HTTPException(401, 'Invalid credentials');
+        return $this->json(['response' => false]);
     }
 }

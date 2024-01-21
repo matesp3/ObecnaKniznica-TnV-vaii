@@ -12,3 +12,7 @@
     padding: 5px 15px;
     border-radius: 8px;
 }
+
+#loginCard {
+    transform: translateY(7vh);
+}
