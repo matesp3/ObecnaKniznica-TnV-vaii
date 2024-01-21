@@ -14,7 +14,7 @@ class User extends Model
     protected string $role;
     protected string $created;
 
-    public static function getUser(string $login) : ?User
+    public static function getUserByLogin(string $login) : ?User
     {
         $wanted = self::getAll('`login` LIKE ?', [$login]);
         return (count($wanted) == 1) ? $wanted[0] : null;

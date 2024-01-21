@@ -21,7 +21,7 @@ $layout = 'root';
                            placeholder="Heslo" required>
                 </div>
                 <div class="form-text">
-                    <a class="withLink" href="<?= $link->url("registration.index") ?>"> Nemáte účet? Vytvoriť nový </a>
+                    <a class="withLink" href="<?= $link->url("user.registration") ?>"> Nemáte účet? Vytvoriť nový </a>
                 </div>
                 <button id='submitLogin' type="submit" class="submitLoginButton">Prihlásiť sa</button>
             </form>

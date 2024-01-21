@@ -1,5 +1,4 @@
 <?php
-
 $layout = 'root';
 /** @var Array $data */
 /** @var \App\Core\LinkGenerator $link */
@@ -15,7 +14,7 @@ $layout = 'root';
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     <input id="reg-name" name="reg-name" class="form-control" type="text"
                            placeholder="Meno s diakritikou" required
-                           pattern=<?= '[a-zA-Z' . \App\Config\Configuration::UNI_SLOVAK_LETTERS . ']{2,}' ?>>
+                           pattern=<?= \App\Config\Configuration::SLOVAK_PATTERN_LONG ?>>
                 </div>
             </div>
 
@@ -24,7 +23,7 @@ $layout = 'root';
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     <input id="reg-surname" name="reg-surname" class="form-control" type="text"
                            placeholder="Priezvisko s diakritikou" required
-                           pattern=<?= '[a-zA-Z' . \App\Config\Configuration::UNI_SLOVAK_LETTERS . ']{2,}' ?>>
+                           pattern=<?= \App\Config\Configuration::SLOVAK_PATTERN_LONG ?>>
                 </div>
             </div>
 
@@ -33,7 +32,7 @@ $layout = 'root';
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     <input id="reg-login" name="reg-login" class="form-control" type="text"
                            placeholder="Aspoň 5 znakov bez diakritiky [+čísla]" required
-                           pattern=<?= '[0-9a-zA-Z]{5,}' ?>>
+                           pattern=<?= \App\Config\Configuration::LATIN_PATTERN_LONG ?>>
                 </div>
             </div>
 
@@ -42,7 +41,7 @@ $layout = 'root';
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     <input id="reg-password" name="reg-password" class="form-control" type="password"
                            placeholder="Aspoň 5 znakov bez diakritiky [+čísla a znaky @ # $ &]" required
-                           pattern=<?= '[@#$&0-9a-zA-Z]{5,}' ?>>
+                           pattern=<?= \App\Config\Configuration::PASSWORD_PATTERN_LONG ?>>
                 </div>
             </div>
 
@@ -51,7 +50,7 @@ $layout = 'root';
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     <input id="reg-password2" name="reg-password2" class="form-control" type="password"
                            placeholder="Zopakujte zadané heslo" required
-                           pattern=<?= '[@#$&0-9a-zA-Z]{5,}' ?>>
+                           pattern=<?= \App\Config\Configuration::PASSWORD_PATTERN_LONG ?>>
                 </div>
             </div>
 
