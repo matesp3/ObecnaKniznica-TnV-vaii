@@ -23,8 +23,11 @@ class LoginController extends AControllerBase
             && property_exists($jsonData, 'login') && property_exists($jsonData, 'password')
             && !empty($jsonData->login) && !empty($jsonData->password))
         {
-            return $this->json(['passed' => $this->app->getAuth()->login($jsonData->login, $jsonData->password)]);
-//            throw new HTTPException(401);
+            if ($this->app->getAuth()->login($jsonData->login, $jsonData->password))
+            {
+                return new EmptyResponse();
+            }
+            return $this->json(['passed' => 'ahoj']);
         }
         throw new HTTPException(401);
     }

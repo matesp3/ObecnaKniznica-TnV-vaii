@@ -9,7 +9,7 @@ $layout = 'root';
         <div id="loginFormTitle" class="card-body">
             <h5 class="card-title text-center">Prihlásenie</h5>
 <!--            <form method="post" action="--><?php //= $link->url("login") ?><!--">-->
-            <form method="post" action="<?= $link->url("admin.index") ?>">
+            <form id="formLogin" method="post" action="<?= $link->url("admin.index") ?>">
                 <div class="mb-3">
                     <input name="login" type="text" id="login" class="form-control" placeholder="Login"
                            required autofocus>
@@ -19,7 +19,7 @@ $layout = 'root';
                            placeholder="Heslo" required>
                 </div>
                 <div class="withLink form-text">Nemáte účet? Vytvoriť nový</div>
-                <button id='submitLogin' type="submit" class="submitLoginButton btn-primary">Prihlásiť sa</button>
+                <button id='submitLogin' type="submit" class="submitLoginButton">Prihlásiť sa</button>
             </form>
         </div>
     </div>
