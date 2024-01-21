@@ -349,15 +349,15 @@ window.onload = (event) => {
         fileInput.onchange = () => { checkFileSize(); };
     }
 
-    // const formLogin = document.getElementById('formLogin');
-    // if (formLogin != null)
-    // {
-    //     formLogin.addEventListener("submit",  async (event) => {
-    //         event.preventDefault();
-    //         await tryLogin(event);
-    //         return false;
-    //     });
-    // }
+    const formLogin = document.getElementById('formLogin');
+    if (formLogin != null)
+    {
+        formLogin.addEventListener("submit",  async (event) => {
+            event.preventDefault();
+            await tryLogin(event);
+            return false;
+        });
+    }
 
     const formRegistration = document.getElementById('formRegistration');
     if (formRegistration != null)

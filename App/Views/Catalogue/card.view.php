@@ -1,7 +1,7 @@
 <?php
-/** @var \App\Core\LinkGenerator $link */
-/** @var \App\Models\BookItem $bookItem */
-/** @var array $data */
+/** @var \App\Core\LinkGenerator  $link      */
+/** @var \App\Models\BookItem     $bookItem  */
+/** @var array                    $authors   */
 ?>
 
 <div class="card">
@@ -21,7 +21,7 @@
                         </div>
                         <div class="row">
                             <p class="card-text authorName">
-                                <small class="text-body-primary"><?= 'Dorobit autorov!' ?></small>
+                                <small class="text-body-primary"><?= $authors ?></small>
                             </p>
                         </div>
                         <div class="row descriptionSneakPeak">

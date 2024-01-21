@@ -23,7 +23,7 @@ class MyAuthenticator implements IAuthenticator
         if (!$login || !$password) // cannot be null
             return false;
 
-        $retrieved = User::getUser($login);
+        $retrieved = User::getUserByLogin($login);
         if (!$retrieved)  // no such login
             return false;
 

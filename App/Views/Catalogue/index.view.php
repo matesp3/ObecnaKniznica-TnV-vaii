@@ -1,8 +1,9 @@
 
 <?php
-/** @var \App\Core\LinkGenerator $link */
-/** @var \App\Models\BookItem $bookItem */
-/** @var array $data */
+/** @var \App\Core\LinkGenerator  $link */
+/** @var \App\Models\BookItem     $bookItem */
+/** @var string                   $authors */
+/** @var array                    $data */
 ?>
 
 <div class="gridPageLayout">
@@ -17,7 +18,9 @@
             </div>
         </div>
         <div class="containerOfBooks container">
-            <?php foreach ($data as $bookItem) : ?>
+            <?php foreach ($data as $complexItem) : ?>
+                <?php $bookItem = $complexItem['book'] ?>
+                <?php $authors = $complexItem['authors'] ?>
                 <?php require 'card.view.php'?>
             <?php endforeach; ?>
 

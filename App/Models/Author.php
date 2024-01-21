@@ -57,4 +57,9 @@ class Author extends Model
         $this->created = $created;
     }
 
+    public function getFullname() : string
+    {
+        return ($this->name . ' ' . $this->surname);
+    }
+
 }
