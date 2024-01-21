@@ -27,8 +27,8 @@ class MyAuthenticator implements IAuthenticator
         if (!$retrieved)  // no such login
             return false;
 
-//        if (password_verify($password, $retrieved->getPasswordHash()))
-        if (strcmp($password, $retrieved->getPasswordHash()) == 0)
+//        if (strcmp($password, $retrieved->getPasswordHash()) == 0)
+        if (password_verify($password, $retrieved->getPasswordHash()))
         {
             $_SESSION['user'] = $login;
             return true;
