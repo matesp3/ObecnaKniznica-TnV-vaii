@@ -63,7 +63,7 @@ window.onload = (event) => {
 
         const div = document.getElementById('formErrorMessages');
         if (typeof data === "undefined") {
-            div.innerHTML = div.innerHTML + `<span className="invalid"><i><small>"Chyba! UNDEFINED returned" </small></i></span>`;
+            div.innerHTML = div.innerHTML + `<span><i><small>"Chyba! UNDEFINED returned" </small></i></span>`;
             throw new Error('Controller returned UNDEFINED value!');
         }
         if (typeof data === "boolean") {
@@ -108,7 +108,7 @@ window.onload = (event) => {
     function getPosition(precedingChar, identificator) {
         const params = identificator.toString().split(precedingChar);
         const position = params[1];
-        if (position != null && position != undefined && position > 0)
+        if (position != null)
             return position;
         return undefined;
     }
@@ -117,13 +117,13 @@ window.onload = (event) => {
             return;
         const buttons = document.getElementsByClassName('deleteButton');
         const count = buttons?.length;
-        if (count == undefined) // undefined in case of buttons var was null
+        if (count === undefined) // undefined in case of buttons var was null
             return;
 
         for (let i = startId; i < count + 1; i++) {
             let currentBtn = buttons[i - 1]; // need to remember them, before renaming...
             const pos = getPosition("-", currentBtn.id);
-            if (pos != undefined) {
+            if (pos !== undefined) {
                 // let currentInputSurname = currentBtn.previousElementSibling;
                 let currentInputSurname = document.getElementById(`aSurname-${pos}`);
                 let currentInputName = document.getElementById(`aName-${pos}`);
@@ -161,7 +161,7 @@ window.onload = (event) => {
         const delButtons = document.getElementsByClassName('deleteButton');
         if (deleteButtons == null)
             return;
-        if (deleteButtons.length == 1) {
+        if (deleteButtons.length === 1) {
             delButtons[0].style.display = "none";
         }
     }
@@ -170,7 +170,7 @@ window.onload = (event) => {
         const delButtons = document.getElementsByClassName('deleteButton');
         if (deleteButtons == null)
             return;
-        if (deleteButtons.length == 1) {
+        if (deleteButtons.length === 1) {
             delButtons[0].style.display = "block"; // now, we can display it, because there's going to be at least two authors
         }
 
@@ -252,7 +252,7 @@ window.onload = (event) => {
 
     let deleteButtons = document.getElementsByClassName('deleteButton');
     if (deleteButtons != null && deleteButtons.length > 0) {
-        if (deleteButtons.length == 1)
+        if (deleteButtons.length === 1)
             deleteButtons[0].style.display = "none"; // if there's only one, the delete button should not be displayed
 
         for (let i = 0; i < deleteButtons.length; i++) {
