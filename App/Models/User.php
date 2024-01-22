@@ -25,16 +25,6 @@ class User extends Model
         return $this->id;
     }
 
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
@@ -53,6 +43,16 @@ class User extends Model
     public function setRealName(string $realName): void
     {
         $this->realName = $realName;
+    }
+
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    public function setLogin(string $login): void
+    {
+        $this->login = $login;
     }
 
     public function getRealSurname(): string
